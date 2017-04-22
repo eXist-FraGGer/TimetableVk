@@ -1,0 +1,8 @@
+input[type="time"]
+{
+	width: 60px;
+	font-size: 8pt;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
