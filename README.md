@@ -4,7 +4,8 @@ Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Table of Contents
-
+## npm i --save babel-preset-latest babel-preset-react babel-preset-stage-2 lodash moment react react-bootstrap react-dnd react-dnd-html5-backend react-dom react-redux react-router react-router-redux redux redux-logger redux-thunk
+## npm i --save-dev react-scripts redux-devtools-extension
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)

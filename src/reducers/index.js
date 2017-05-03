@@ -1,6 +1,10 @@
-import { combineReducers } from 'redux'
-import cells from './cell';
+import { routerReducer } from 'react-router-redux';
+import { combineReducers } from 'redux';
+import timetable from './timetable';
+import lessons from './lessons';
 
 export default combineReducers({
-    cells
-})
+    routing: routerReducer,
+    timetable,
+    lessons,
+});

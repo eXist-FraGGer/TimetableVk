@@ -1,30 +1,36 @@
 .header {
-	display: inline-block;
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-	border: 2px solid black;
-	border-right: 1px solid black;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid black;
+    border-right-width: 0;
 }
-.time-cell { /*6,060606060606061*/
-	width: 9.090909090909091%;
-	display: inline-block;
-	border-right: 1px solid black;
+.header .time-cell { /*6,060606060606061*/
+    width: 9.090909090909091%;
+    display: flex;
+    border-right: 1px solid black;
 }
-.day-col {
-	width: 18.181818181818183%;
-	display: inline-block;
+.header .day-col {
+    width: 18.181818181818183%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.day-col .text-cell {
+.header .day-col .text-cell {
 }
-.day-col .group-cell {
-	width: 33.333333333333333%;
-	display: inline-block;
+.header .day-col .group-cell {
+    width: 33.333333333333333%;
+    display: flex;
 }
-.day-col .day-cell {
-	width: 66.666666666666666%;
-	background-color: #ffe000;
-	display: inline-block;
-	border-right: 1px solid black;
-	border-left: 1px solid black;
+.header .day-col .day-cell {
+    display: flex;
+    flex-direction: column;
+    width: 66.666666666666666%;
+    height: 100%;
+    justify-content: center;
+    background-color: #ffe000;
+    border-right: 2px solid black;
+    border-left: 1px solid black;
 }

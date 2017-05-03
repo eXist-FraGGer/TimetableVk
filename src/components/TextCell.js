@@ -22,7 +22,7 @@ class TextCell extends Component {
                 className="text-cell"
                 style={{backgroundColor: this.props.color || 'transparent'}}>
 
-                <strong>{ this.props.value }</strong>
+                <span>{ this.props.value }</span>
             </div>
         );
     }
@@ -31,11 +31,11 @@ class TextCell extends Component {
 const mapStateToProps = (state) => {
     return {
     };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
     }
-}
+};
 
-export default connect( mapStateToProps, mapDispatchToProps )(TextCell)
+export default connect( mapStateToProps, mapDispatchToProps )(TextCell);

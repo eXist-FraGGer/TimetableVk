@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { TextCell, DayCell } from '../../../components';
 
@@ -19,23 +20,25 @@ export class Header extends Component {
                 <div className="time-cell"><TextCell value="Часы занятий" /></div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-                	<DayCell title="Понедельник" date="14.03" />
+                	<DayCell first={this.props.first}
+                             title="Понедельник"
+                             date={moment(this.props.firstDate).format('DD.MM')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Вторник" date="14.03" />
+					<DayCell title="Вторник" date={moment(this.props.firstDate).add(1, 'day').format('DD.MM')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Среда" date="14.03" />
+					<DayCell title="Среда" date={moment(this.props.firstDate).add(2, 'day').format('DD.MM')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Четверг" date="14.03" />
+					<DayCell title="Четверг" date={moment(this.props.firstDate).add(3, 'day').format('DD.MM')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Пятница" date="14.03" />
+					<DayCell title="Пятница" date={moment(this.props.firstDate).add(4, 'day').format('DD.MM')} />
                 </div>
             </div>
         );
@@ -45,11 +48,11 @@ export class Header extends Component {
 const mapStateToProps = (state) => {
     return {
     };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
     }
-}
+};
 
-export default connect( mapStateToProps, mapDispatchToProps )(Header)
+export default connect( mapStateToProps, mapDispatchToProps )(Header);

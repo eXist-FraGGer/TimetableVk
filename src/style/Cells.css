@@ -1,4 +1,11 @@
-text-cell {
-	font-size: 12pt;
+.text-cell {
+	display: flex;
+	flex: 1;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+
+.text-cell span {
+
 }
