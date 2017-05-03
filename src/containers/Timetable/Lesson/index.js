@@ -10,16 +10,18 @@ const lessonSource = {
     beginDrag(props) {
         return {
             day: props.day,
-            index: props.index
+            indexDay: props.indexDay,
+            indexItem: props.indexItem,
+            indexTimeItem: props.indexTimeItem
         };
     },
     endDrag(props, monitor, component) {
         if (!monitor.didDrop()) {
-            return;
+            return null;
         }
 
-        const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
+        // const item = monitor.getItem();
+        // const dropResult = monitor.getDropResult();
     }
 };
 
@@ -28,7 +30,8 @@ const lessonTarget = {
         console.log("lessonTarget", targetProps);
         const sourceProps = monitor.getItem();
 
-        if ( (sourceProps.index !== targetProps.index) || (targetProps.day !== sourceProps.day) ) {
+        if ( (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
+            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)) {
             targetProps.onMove(sourceProps, targetProps);
         }
     }
@@ -61,7 +64,9 @@ class Lesson extends Component {
     };
 
     render() {
-        const { connectDragSource, isOver, canDrop, connectDropTarget, isDragging, empty } = this.props;
+        const { connectDragSource, isOver, canDrop, connectDropTarget, isDragging, group, name, day } = this.props;
+        let empty = false;
+        if (!group || !name) empty = true;
 
         if (empty) {
             return connectDropTarget(
@@ -83,8 +88,8 @@ class Lesson extends Component {
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move'
             }}>
-               <div className="group-cell"><TextCell value={ this.props.group } /></div>
-                <DayCell title={ this.props.name } date={ '14.03' } />
+               <div className="group-cell"><TextCell value={ group } /></div>
+                <DayCell title={ name } date={ day.format('DD.MM') } />
                 <div className='Cell'>
                     {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                     {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
@@ -98,6 +103,7 @@ class Lesson extends Component {
 Lesson.propTypes = {
     group: PropTypes.string,
     name: PropTypes.string,
+    day: PropTypes.object,
 
     // Injected by React DnD:
     connectDragSource: PropTypes.func.isRequired,

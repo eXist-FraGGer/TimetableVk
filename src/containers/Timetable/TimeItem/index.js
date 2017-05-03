@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import _ from 'lodash';
+
+import { move } from '../../../actions/lessons';
 
 import { TextCell } from '../../../components';
 import DayCollContainer   from '../DayCollContainer';
@@ -51,36 +55,36 @@ export class TimeItem extends Component {
     }
 
     onMove = (sourceProps, targetProps) => {
-        const lessons = this.state.lessons,
-            target = lessons.items[targetProps.day][targetProps.index],
-            source = lessons.items[sourceProps.day][sourceProps.index];
-
-        lessons.items[targetProps.day][targetProps.index] = source;
-        lessons.items[sourceProps.day][sourceProps.index] = target;
-
-        this.setState({ lessons });
-
-        console.log('MOVE', lessons);
-    };
-
-    renderLessons = () => {
-        return _.map(this.state.lessons.items, (item, index) => {
-           return (
-               <DayCollContainer
-                   maxLength={_.max(this.state.lessons.items, i => i.length ).length}
-                   day={index} lessons={item} key={index}
-                   onMove={this.onMove}
-               />
-           );
-        });
+        return this.props.move(sourceProps, targetProps, this.props.indexTimeItem);
     };
 
     render() {
+        const lessonsGroupByDay = _.groupBy(this.props.lessons.items, 'indexDay');
+
         return (
             <div className="time-item">
                 <div className="time-cell"><TextCell value="8.00-9.20" /></div>
 
-                {this.renderLessons()}
+                <DayCollContainer
+                    day={moment(this.props.firstDate).add(0, 'days')} indexDay={0}
+                    lessons={lessonsGroupByDay['0'] || []} key={0} onMove={this.onMove}
+                    indexTimeItem={this.props.indexTimeItem} />
+                <DayCollContainer
+                    day={moment(this.props.firstDate).add(1, 'days')} indexDay={1}
+                    lessons={lessonsGroupByDay['1'] || []} key={1} onMove={this.onMove}
+                    indexTimeItem={this.props.indexTimeItem} />
+                <DayCollContainer
+                    day={moment(this.props.firstDate).add(2, 'days')} indexDay={2}
+                    lessons={lessonsGroupByDay['2'] || []} key={2} onMove={this.onMove}
+                    indexTimeItem={this.props.indexTimeItem} />
+                <DayCollContainer
+                    day={moment(this.props.firstDate).add(3, 'days')} indexDay={3}
+                    lessons={lessonsGroupByDay['3'] || []} key={3} onMove={this.onMove}
+                    indexTimeItem={this.props.indexTimeItem} />
+                <DayCollContainer
+                    day={moment(this.props.firstDate).add(4, 'days')} indexDay={4}
+                    lessons={lessonsGroupByDay['4'] || []} key={4} onMove={this.onMove}
+                    indexTimeItem={this.props.indexTimeItem} />
 
             </div>
         );
@@ -94,6 +98,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        move: bindActionCreators(move, dispatch),
     }
 };
 

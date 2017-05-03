@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
+// import moment from 'moment';
 
 import { Timetable } from '../containers';
 
@@ -15,16 +15,12 @@ export class Home extends Component {
     }
 
     render() {
-        this.props.holidays.forEach( item => {
-            console.log(moment(item));
-        });
-
         return (
             <div>
                 <Timetable first firstDate={this.props.firstDate} />
-                <Timetable firstDate={moment(this.props.firstDate).add(7, 'days')} />
+                {/*<Timetable firstDate={moment(this.props.firstDate).add(7, 'days')} />
                 <Timetable firstDate={moment(this.props.firstDate).add(14, 'days')} />
-                <Timetable firstDate={moment(this.props.firstDate).add(21, 'days')} />
+                <Timetable firstDate={moment(this.props.firstDate).add(21, 'days')} />*/}
             </div>
         );
     }
