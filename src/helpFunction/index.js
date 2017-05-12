@@ -21,17 +21,26 @@ export const getEasterDayByYear = year => {
  *
  * @param year
  */
-export const getHolidaysByYear = year => [
-    moment([year, 0, 1]),
-    moment([year, 0, 7]),
-    moment([year, 2, 8]),
-    getEasterDayByYear(year).add(9, 'days'), // радуница
-    moment([year, 4, 1]),
-    moment([year, 4, 9]),
-    moment([year, 6, 3]),
-    moment([year, 10, 7]),
-    moment([year, 11, 25]),
-];
+export const getHolidaysByYear = year => {
+    const dates = [
+        moment([year, 0, 1]),
+        moment([year, 0, 7]),
+        moment([year, 2, 8]),
+        getEasterDayByYear(year).add(9, 'days'), // радуница вторник
+        getEasterDayByYear(year).add(8, 'days'), // понедельник перед радуницей
+        moment([year, 4, 1]),
+        moment([year, 4, 9]),
+        moment([year, 6, 3]),
+        moment([year, 10, 7]),
+        moment([year, 11, 25]),
+    ];
+
+    if (moment([year, 4, 9]).day() === 2) { // если 9 мая вторник, то и понедельник выходной
+        dates.push(moment([year, 4, 8]));
+    }
+
+    return dates;
+};
 
 /**
  1 января – Новый год;
@@ -56,6 +65,7 @@ export const getFirstMondayByMonthInYear = (year, month) => {
     const first = moment([year, month, 1]);
 
     return first.day('Monday');
+
     /*
     if (first.day() > 5) {
         first.add(8 - first.day(), 'days');

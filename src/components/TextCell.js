@@ -20,13 +20,14 @@ class TextCell extends Component {
         return (
             <div
                 className="text-cell"
+                onClick={this.props.onClick || undefined}
                 style={{backgroundColor: this.props.color || 'transparent'}}>
 
                 <span>{ this.props.value }</span>
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = (state) => {
     return {

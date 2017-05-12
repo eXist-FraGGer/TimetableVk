@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'react-bootstrap'
+import { Grid, Row } from 'react-bootstrap'
 import _ from 'lodash';
 
 import Header from './Header';
@@ -19,6 +19,10 @@ export class Timetable extends Component {
         return (
             <div>
                 <Grid className="" fluid>
+                    <Row xs={12} style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
+                        <h3>Неделя №{this.props.weekNumber}</h3>
+                    </Row>
+
                 	<Header first={this.props.first} firstDate={this.props.firstDate} />
 
                     {_.map(this.props.allLessons, (lessons, index) => {

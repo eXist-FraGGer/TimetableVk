@@ -4,7 +4,8 @@ import flow                 from 'lodash/flow';
 import { ItemTypes }        from '../../../constants';
 import { DragSource, DropTarget } from 'react-dnd';
 
-import { TextCell, DayCell } from '../../../components';
+import { TextCell, DayCell, LessonCell, Dropdown } from '../../../components';
+import stylesLessonCells from '../../../style/LessonCells';
 
 const lessonSource = {
     beginDrag(props) {
@@ -31,7 +32,7 @@ const lessonTarget = {
         const sourceProps = monitor.getItem();
 
         if ( (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
-            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)) {
+            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem) ) {
             targetProps.onMove(sourceProps, targetProps);
         }
     }
@@ -63,10 +64,17 @@ class Lesson extends Component {
         this.props.onMove(sourceProps, targetProps);
     };
 
+    clickSelectItem = (index) => {
+        this.props.changeGroup({
+            indexDay: this.props.indexDay,
+            indexItem: this.props.indexItem,
+            indexTimeItem: this.props.indexTimeItem
+        }, index);
+    };
+
     render() {
-        const { connectDragSource, isOver, canDrop, connectDropTarget, isDragging, group, name, day } = this.props;
-        let empty = false;
-        if (!group || !name) empty = true;
+        const { connectDragSource, isOver, canDrop, connectDropTarget,
+            isDragging, groupId, lessonId, day, teacherId, classNumber, empty } = this.props;
 
         if (empty) {
             return connectDropTarget(
@@ -88,8 +96,16 @@ class Lesson extends Component {
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move'
             }}>
-               <div className="group-cell"><TextCell value={ group } /></div>
-                <DayCell title={ name } date={ day.format('DD.MM') } />
+                <Dropdown className="group-cell" data={this.props.groups} currentIndex={groupId}
+                          title={<TextCell value={ this.props.groups[groupId] } />}
+                          styleSelectContainer={stylesLessonCells.selectContainer}
+                          styleSelectItem={stylesLessonCells.selectItem}
+                          clickSelectItem={this.clickSelectItem} />
+
+                <LessonCell lessonId={lessonId} day={day} teacherId={teacherId} classNumber={classNumber}
+                            indexDay={this.props.indexDay}
+                            indexItem={this.props.indexItem}
+                            indexTimeItem={this.props.indexTimeItem} />
                 <div className='Cell'>
                     {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                     {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
@@ -101,8 +117,10 @@ class Lesson extends Component {
 }
 
 Lesson.propTypes = {
-    group: PropTypes.string,
-    name: PropTypes.string,
+    groupId: PropTypes.number,
+    lessonId: PropTypes.number,
+    teacherId: PropTypes.number,
+    classNumber: PropTypes.number,
     day: PropTypes.object,
 
     // Injected by React DnD:

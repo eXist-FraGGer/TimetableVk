@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import moment from 'moment';
+import moment from 'moment';
+import _ from 'lodash';
 
 import { Timetable } from '../containers';
 
@@ -17,10 +18,12 @@ export class Home extends Component {
     render() {
         return (
             <div>
-                <Timetable first firstDate={this.props.firstDate} />
-                {/*<Timetable firstDate={moment(this.props.firstDate).add(7, 'days')} />
-                <Timetable firstDate={moment(this.props.firstDate).add(14, 'days')} />
-                <Timetable firstDate={moment(this.props.firstDate).add(21, 'days')} />*/}
+                {_.map(new Array(4), (value, index) => {
+                    return (
+                        <Timetable key={index} first={index===0} weekNumber={index}
+                                   firstDate={moment(this.props.firstDate).add(index * 7, 'days')} />
+                    )
+                })}
             </div>
         );
     }
