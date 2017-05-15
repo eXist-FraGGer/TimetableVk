@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
 class TimeCell extends Component {
@@ -8,12 +7,6 @@ class TimeCell extends Component {
         this.state = {
         }
     };
-
-    componentDidMount() {
-    }
-
-    componentWillReceiveProps(nextProps) {
-    }
 
     render() {
         return (
@@ -27,16 +20,6 @@ class TimeCell extends Component {
             </Row>
         );
     }
-};
-
-const mapStateToProps = (state) => {
-    return {
-    };
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )(TimeCell)
+export default TimeCell;

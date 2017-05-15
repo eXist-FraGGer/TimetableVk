@@ -17,6 +17,7 @@ export default function (state = initial_state, action) {
             const date = action.payload;
 
             return {
+                ...state,
                 firstDate: getFirstMondayByMonthInYear(date.year(), date.month()),
                 holidays: getHolidaysByYear(date.year())
             };

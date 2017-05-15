@@ -13,7 +13,11 @@ const lessonSource = {
             day: props.day,
             indexDay: props.indexDay,
             indexItem: props.indexItem,
-            indexTimeItem: props.indexTimeItem
+            indexTimeItem: props.indexTimeItem,
+            groupId: props.groupId,
+            lessonId: props.lessonId,
+            teacherId: props.teacherId,
+            classNumber: props.classNumber
         };
     },
     endDrag(props, monitor, component) {
@@ -28,7 +32,6 @@ const lessonSource = {
 
 const lessonTarget = {
     drop(targetProps, monitor) {
-        console.log("lessonTarget", targetProps);
         const sourceProps = monitor.getItem();
 
         if ( (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
@@ -72,6 +75,10 @@ class Lesson extends Component {
         }, index);
     };
 
+    canDrop = () => {
+        return false;
+    };
+
     render() {
         const { connectDragSource, isOver, canDrop, connectDropTarget,
             isDragging, groupId, lessonId, day, teacherId, classNumber, empty } = this.props;
@@ -82,9 +89,9 @@ class Lesson extends Component {
                     <div className="group-cell"><TextCell value={' - '} /></div>
                     <DayCell title={' - '} date={' - '} />
                     <div className='Cell'>
-                        {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
+                        {isOver && canDrop && this.canDrop.call(this) && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                         {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
-                        {isOver && !canDrop && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
+                        {isOver && canDrop && !this.canDrop.call(this) && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
                     </div>
                 </div>
             );
@@ -97,9 +104,10 @@ class Lesson extends Component {
                 cursor: 'move'
             }}>
                 <Dropdown className="group-cell" data={this.props.groups} currentIndex={groupId}
-                          title={<TextCell value={ this.props.groups[groupId] } />}
+                          title={<TextCell value={this.props.groups[groupId]} />}
                           styleSelectContainer={stylesLessonCells.selectContainer}
                           styleSelectItem={stylesLessonCells.selectItem}
+                          styleHoverItem={stylesLessonCells.hoverItem}
                           clickSelectItem={this.clickSelectItem} />
 
                 <LessonCell lessonId={lessonId} day={day} teacherId={teacherId} classNumber={classNumber}
@@ -107,9 +115,9 @@ class Lesson extends Component {
                             indexItem={this.props.indexItem}
                             indexTimeItem={this.props.indexTimeItem} />
                 <div className='Cell'>
-                    {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
+                    {isOver && canDrop && this.canDrop.call(this) && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                     {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
-                    {isOver && !canDrop && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
+                    {isOver && canDrop && !this.canDrop.call(this) && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
                 </div>
             </div>
         ));

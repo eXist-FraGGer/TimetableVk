@@ -22,6 +22,7 @@
 }
 .time-item .day-col-item {
 	display: flex;
+	min-height: 33px;
 	width: 100%;
 	align-items: center;
 	border-bottom: 1px solid black;
@@ -36,4 +37,7 @@
 	background-color: #ffe000;
 	flex-direction: column;
 	border-left: 1px solid black;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import '../style/Cells.css';
 
@@ -9,12 +8,6 @@ class TextCell extends Component {
         this.state = {
         }
     };
-
-    componentDidMount() {
-    }
-
-    componentWillReceiveProps(nextProps) {
-    }
 
     render() {
         return (
@@ -29,14 +22,4 @@ class TextCell extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
-
-export default connect( mapStateToProps, mapDispatchToProps )(TextCell);
+export default TextCell;

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import moment from 'moment';
 import { changeLesson, changeTeacher, changeClassNumber } from '../actions/lessons';
-import { Dropdown } from '../components';
-import _ from 'lodash';
+import { Dropdown, Article } from '../components';
+// import _ from 'lodash';
 
 import styles from '../style/LessonCells';
 import '../style/Cells.css';
@@ -47,23 +47,24 @@ class LessonCell extends Component {
         return (
             <div className="day-cell">
                 <div style={styles.line}>
-                    <Dropdown className="name" data={lessons} title={lessons[lessonId]} currentIndex={lessonId}
+                    <Dropdown style={styles.left} data={lessons} title={lessons[lessonId]} currentIndex={lessonId}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
+                              styleHoverItem={styles.hoverItem}
                               clickSelectItem={this.clickLessonsSelectItem} />
-                    <div className="article">
-                        {article || 'article'}
-                    </div>
+                    <Article style={styles.right} value={article || 'article'} />
                 </div>
                 <div style={styles.line}>
-                    <Dropdown className="teacher" data={teachers} title={teachers[teacherId]} currentIndex={teacherId}
+                    <Dropdown style={styles.left} data={teachers} title={teachers[teacherId]} currentIndex={teacherId}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
+                              styleHoverItem={styles.hoverItem}
                               clickSelectItem={this.clickTeachersSelectItem} />
 
-                    <Dropdown className="class-number" data={classNumbers} title={classNumbers[classNumber]} currentIndex={classNumber}
+                    <Dropdown style={styles.right} data={classNumbers} title={classNumbers[classNumber]} currentIndex={classNumber}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
+                              styleHoverItem={styles.hoverItem}
                               clickSelectItem={this.clickClassNumbersSelectItem} />
                 </div>
             </div>

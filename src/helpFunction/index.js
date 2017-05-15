@@ -74,3 +74,7 @@ export const getFirstMondayByMonthInYear = (year, month) => {
     return first.day('Monday');
     */
 };
+
+export const checkLessons = () => {
+
+} ;

@@ -7,7 +7,17 @@ class Dropdown extends Component {
         super(props);
         this.state = {
             isOpened: false,
+            hover: false,
+            hoverIndex: -1
         }
+    };
+
+    onMouseEnterHandler = index => {
+        this.setState({ hover: true, hoverIndex: index });
+    };
+
+    onMouseLeaveHandler = () => {
+        this.setState({ hover: false, hoverIndex: -1 });
     };
 
     handleClickOutside() {
@@ -15,31 +25,35 @@ class Dropdown extends Component {
     };
 
     handleClick = () => {
-        console.log('handleClick');
         this.setState({ isOpened: !this.state.isOpened });
     };
 
     handleItemClick = index => {
         this.setState({ isOpened: false });
-        this.setState({ isOpened: false });
         return this.props.clickSelectItem(index);
     };
 
     render() {
-        const { title, className, data, styleSelectContainer, styleSelectItem, currentIndex } = this.props;
+        const { styleHoverItem, styleSelectContainer, styleSelectItem,
+            title, style, className, data, currentIndex } = this.props;
 
         return (
-            <div className={className}
-                onClick={this.handleClick} >
+            <div style={style} className={className} onClick={this.handleClick} >
                 {title}
                 {this.state.isOpened &&
                 <ul style={styleSelectContainer}>
                     {_.compact(_.map(data, (value, index) => {
                         return index !== currentIndex
-                            ? ( <li style={styleSelectItem} key={index}
-                                    onClick={this.handleItemClick.bind(this, index)} >
-                                {value}
-                            </li> )
+                            ? ( <div style={(this.state.hover && index === this.state.hoverIndex)
+                                            ? styleHoverItem : {} } key={index}
+                                     onMouseEnter={this.onMouseEnterHandler.bind(this, index)}
+                                     onMouseLeave={this.onMouseLeaveHandler} >
+
+                                    <li style={styleSelectItem}
+                                        onClick={this.handleItemClick.bind(this, index)} >
+                                        {value}
+                                    </li>
+                            </div> )
                             : undefined;
                     }))}
                 </ul>}
