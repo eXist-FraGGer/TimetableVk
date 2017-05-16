@@ -1,296 +1,356 @@
 import types from '../actions/types';
 import _ from 'lodash';
 
+import { checkLessons } from '../helpFunction';
+
 const initial_state = [{
-    times: {
-        start: "8:00",
-        end: "9:20"
-    },
-    items: [{
-        indexDay: 0,
-        indexItem: 0,
-        groupId: 6,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 0,
-        indexItem: 1,
-        groupId: 2,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 2,
-        indexItem: 0,
-        groupId: 3,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 0,
-        groupId: 4,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 1,
-        groupId: 0,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 0,
-        groupId: 5,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 1,
-        groupId: 7,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 2,
-        groupId: 8,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }]
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 0,
+    groupId: 6,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0,
+    collision: {
+        group: false,
+        teacher: false,
+        class: false
+    }
 }, {
-    times: {
-        start: "9:35",
-        end: "10:55"
-    },
-    items: [{
-        indexDay: 0,
-        indexItem: 0,
-        groupId: 6,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 0,
-        indexItem: 1,
-        groupId: 2,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 2,
-        indexItem: 0,
-        groupId: 3,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 0,
-        groupId: 4,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 1,
-        groupId: 0,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 0,
-        groupId: 5,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 1,
-        groupId: 7,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 2,
-        groupId: 8,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }]
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 1,
+    groupId: 2,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
 }, {
-    times: {
-        start: "14:35",
-        end: "15:55"
-    },
-    items: [{
-        indexDay: 0,
-        indexItem: 0,
-        groupId: 6,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 0,
-        indexItem: 1,
-        groupId: 2,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 2,
-        indexItem: 0,
-        groupId: 3,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 0,
-        groupId: 4,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 1,
-        groupId: 0,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 0,
-        groupId: 5,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 1,
-        groupId: 7,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 2,
-        groupId: 8,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }]
-},{
-    times: {
-        start: "16:10",
-        end: "17:30"
-    },
-    items: [{
-        indexDay: 0,
-        indexItem: 0,
-        groupId: 6,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 0,
-        indexItem: 1,
-        groupId: 2,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 2,
-        indexItem: 0,
-        groupId: 3,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 0,
-        groupId: 4,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 3,
-        indexItem: 1,
-        groupId: 0,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 0,
-        groupId: 5,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 1,
-        groupId: 7,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }, {
-        indexDay: 4,
-        indexItem: 2,
-        groupId: 8,
-        lessonId: 0,
-        teacherId: 0,
-        classNumber: 0
-    }]
-}];
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 2,
+    indexItem: 0,
+    groupId: 3,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 0,
+    groupId: 4,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 1,
+    groupId: 0,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 0,
+    groupId: 5,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 1,
+    groupId: 7,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 0,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 2,
+    groupId: 8,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 0,
+    groupId: 6,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 1,
+    groupId: 2,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 2,
+    indexItem: 0,
+    groupId: 3,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 0,
+    groupId: 4,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 1,
+    groupId: 0,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 0,
+    groupId: 5,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 1,
+    groupId: 7,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 1,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 2,
+    groupId: 8,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 0,
+    groupId: 6,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 1,
+    groupId: 2,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 2,
+    indexItem: 0,
+    groupId: 3,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 0,
+    groupId: 4,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 1,
+    groupId: 0,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 0,
+    groupId: 5,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 1,
+    groupId: 7,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 2,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 2,
+    groupId: 8,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 0,
+    groupId: 6,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 0,
+    indexItem: 1,
+    groupId: 2,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 2,
+    indexItem: 0,
+    groupId: 3,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 0,
+    groupId: 4,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 3,
+    indexItem: 1,
+    groupId: 0,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 0,
+    groupId: 5,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 1,
+    groupId: 7,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}, {
+    indexTimeItem: 3,
+    indexWeek: 0,
+    indexDay: 4,
+    indexItem: 2,
+    groupId: 8,
+    lessonId: 0,
+    teacherId: 0,
+    classNumber: 0
+}
+];
 
 export default function (state = initial_state, action) {
     switch (action.type) {
 
         case types.MOVE: {
-            const {source, target} = action.payload;
+            const { source, target } = action.payload;
 
-            const newState = _.map(state, object => Object.assign({}, object));
+            // console.log(source, target);
 
-            let sourceIndex = _.findIndex(newState[source.indexTimeItem].items, {
+            let newState = _.map(state, object => Object.assign({}, object));
+
+            let sourceIndex = _.findIndex(newState, {
+                    indexWeek: source.indexWeek,
+                    indexTimeItem: source.indexTimeItem,
                     indexDay: source.indexDay,
-                    indexItem: source.indexItem
+                    indexItem: source.indexItem,
                 }),
-                targetIndex = _.findIndex(newState[target.indexTimeItem].items, {
+                targetIndex = _.findIndex(newState, {
+                    indexWeek: target.indexWeek,
+                    indexTimeItem: target.indexTimeItem,
                     indexDay: target.indexDay,
                     indexItem: target.indexItem
                 });
 
             if (targetIndex === -1) {
-                if (target.indexTimeItem === source.indexTimeItem) {
-                    newState[source.indexTimeItem].items[sourceIndex].indexItem = target.indexItem;
-                    newState[source.indexTimeItem].items[sourceIndex].indexDay = target.indexDay;
-                } else {
-                    newState[target.indexTimeItem].items.push(Object.assign({},
-                        newState[source.indexTimeItem].items[sourceIndex], {
-                            indexItem: target.indexItem,
-                            indexDay: target.indexDay
-                        }));
-                    delete newState[source.indexTimeItem].items[sourceIndex];
-                }
+                newState.push(Object.assign({}, newState[sourceIndex], {
+                    indexWeek: target.indexWeek,
+                    indexTimeItem: target.indexTimeItem,
+                    indexDay: target.indexDay,
+                    indexItem: target.indexItem
+                }));
+                delete newState[sourceIndex];
             } else {
-                newState[target.indexTimeItem].items.push(Object.assign({},
-                    newState[source.indexTimeItem].items[sourceIndex],
-                    { indexItem: target.indexItem, indexDay: target.indexDay }));
-                newState[source.indexTimeItem].items.push(Object.assign({},
-                    newState[target.indexTimeItem].items[targetIndex],
-                    { indexItem: source.indexItem, indexDay: source.indexDay }));
+                newState.push(Object.assign({}, newState[targetIndex], {
+                    indexWeek: source.indexWeek,
+                    indexTimeItem: source.indexTimeItem,
+                    indexDay: source.indexDay,
+                    indexItem: source.indexItem,
+                }));
+                newState.push(Object.assign({}, newState[sourceIndex], {
+                    indexWeek: target.indexWeek,
+                    indexTimeItem: target.indexTimeItem,
+                    indexDay: target.indexDay,
+                    indexItem: target.indexItem
+                }));
 
-                delete newState[source.indexTimeItem].items[sourceIndex];
-                delete newState[target.indexTimeItem].items[targetIndex];
+                delete newState[sourceIndex];
+                delete newState[targetIndex];
             }
+
+            newState = _.compact(newState);
+
+            newState = checkLessons(newState);
 
             return [ ...newState ];
         }
@@ -300,14 +360,16 @@ export default function (state = initial_state, action) {
 
             const newState = _.map(state, object => Object.assign({}, object));
 
-            const lessonIndex = _.findIndex(newState[lesson.indexTimeItem].items, {
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: lesson.indexWeek,
+                indexTimeItem: lesson.indexTimeItem,
                 indexDay: lesson.indexDay,
-                indexItem: lesson.indexItem
+                indexItem: lesson.indexItem,
             });
 
-            newState[lesson.indexTimeItem].items[lessonIndex].groupId = newGroupId;
+            newState[lessonIndex].groupId = newGroupId;
 
-            return [ ...newState ];
+            return [ ...checkLessons(newState) ];
         }
 
         case types.CHANGE_TEACHER: {
@@ -315,14 +377,16 @@ export default function (state = initial_state, action) {
 
             const newState = _.map(state, object => Object.assign({}, object));
 
-            const lessonIndex = _.findIndex(newState[lesson.indexTimeItem].items, {
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: lesson.indexWeek,
+                indexTimeItem: lesson.indexTimeItem,
                 indexDay: lesson.indexDay,
-                indexItem: lesson.indexItem
+                indexItem: lesson.indexItem,
             });
 
-            newState[lesson.indexTimeItem].items[lessonIndex].teacherId = newTeacherId;
+            newState[lessonIndex].teacherId = newTeacherId;
 
-            return [ ...newState ];
+            return [ ...checkLessons(newState) ];
         }
 
         case types.CHANGE_CLASS_NUMBER: {
@@ -330,32 +394,38 @@ export default function (state = initial_state, action) {
 
             const newState = _.map(state, object => Object.assign({}, object));
 
-            const lessonIndex = _.findIndex(newState[lesson.indexTimeItem].items, {
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: lesson.indexWeek,
+                indexTimeItem: lesson.indexTimeItem,
                 indexDay: lesson.indexDay,
-                indexItem: lesson.indexItem
+                indexItem: lesson.indexItem,
             });
 
-            newState[lesson.indexTimeItem].items[lessonIndex].classNumber = newClassNumber;
+            newState[lessonIndex].classNumber = newClassNumber;
 
-            return [ ...newState ];
+            return [ ...checkLessons(newState) ];
         }
 
         case types.CHANGE_LESSON: {
             const { lesson, newLessonId } = action.payload;
 
+            console.log(lesson, newLessonId);
+
             const newState = _.map(state, object => Object.assign({}, object));
 
-            const lessonIndex = _.findIndex(newState[lesson.indexTimeItem].items, {
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: lesson.indexWeek,
+                indexTimeItem: lesson.indexTimeItem,
                 indexDay: lesson.indexDay,
-                indexItem: lesson.indexItem
+                indexItem: lesson.indexItem,
             });
 
-            newState[lesson.indexTimeItem].items[lessonIndex].lessonId = newLessonId;
+            newState[lessonIndex].lessonId = newLessonId;
 
-            return [ ...newState ];
+            return [ ...checkLessons(newState) ];
         }
 
         default:
-            return state
+            return checkLessons(state)
     }
 }

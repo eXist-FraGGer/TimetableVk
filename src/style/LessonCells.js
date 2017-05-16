@@ -30,5 +30,8 @@ export default {
     left: {
         display: 'flex',
         flex: 0.5
+    },
+    collision: {
+        backgroundColor: 'red'
     }
 };

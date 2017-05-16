@@ -14,6 +14,7 @@ const lessonSource = {
             indexDay: props.indexDay,
             indexItem: props.indexItem,
             indexTimeItem: props.indexTimeItem,
+            indexWeek: props.indexWeek,
             groupId: props.groupId,
             lessonId: props.lessonId,
             teacherId: props.teacherId,
@@ -35,7 +36,8 @@ const lessonTarget = {
         const sourceProps = monitor.getItem();
 
         if ( (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
-            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem) ) {
+            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)
+            || (targetProps.indexWeek !== sourceProps.indexWeek) ) {
             targetProps.onMove(sourceProps, targetProps);
         }
     }
@@ -71,7 +73,8 @@ class Lesson extends Component {
         this.props.changeGroup({
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
-            indexTimeItem: this.props.indexTimeItem
+            indexTimeItem: this.props.indexTimeItem,
+            indexWeek: this.props.indexWeek
         }, index);
     };
 
@@ -80,7 +83,7 @@ class Lesson extends Component {
     };
 
     render() {
-        const { connectDragSource, isOver, canDrop, connectDropTarget,
+        const { connectDragSource, isOver, canDrop, connectDropTarget, collision,
             isDragging, groupId, lessonId, day, teacherId, classNumber, empty } = this.props;
 
         if (empty) {
@@ -103,7 +106,8 @@ class Lesson extends Component {
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move'
             }}>
-                <Dropdown className="group-cell" data={this.props.groups} currentIndex={groupId}
+                <Dropdown className='group-cell' data={this.props.groups} currentIndex={groupId}
+                          style={collision.group ? stylesLessonCells.collision : {}}
                           title={<TextCell value={this.props.groups[groupId]} />}
                           styleSelectContainer={stylesLessonCells.selectContainer}
                           styleSelectItem={stylesLessonCells.selectItem}
@@ -111,8 +115,10 @@ class Lesson extends Component {
                           clickSelectItem={this.clickSelectItem} />
 
                 <LessonCell lessonId={lessonId} day={day} teacherId={teacherId} classNumber={classNumber}
+                            collision={collision}
                             indexDay={this.props.indexDay}
                             indexItem={this.props.indexItem}
+                            indexWeek={this.props.indexWeek}
                             indexTimeItem={this.props.indexTimeItem} />
                 <div className='Cell'>
                     {isOver && canDrop && this.canDrop.call(this) && <div style={{backgroundColor: 'green', width:10, height: 10}} />}

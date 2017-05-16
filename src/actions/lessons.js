@@ -8,8 +8,8 @@ import types from './types';
  * @param indexTimeItem
  * @return {{type: string, payload: {source: *, target: *, indexTimeItem: *}}}
  */
-export function move(source, target, indexTimeItem) {
-    return { type: types.MOVE, payload: { source, target, indexTimeItem } };
+export function move(source, target) {
+    return { type: types.MOVE, payload: { source, target } };
 }
 
 export function changeGroup(lesson, newGroupId) {

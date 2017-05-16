@@ -20,6 +20,7 @@ class LessonCell extends Component {
         this.props.changeLesson({
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
+            indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
     };
@@ -28,6 +29,7 @@ class LessonCell extends Component {
         this.props.changeTeacher({
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
+            indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
     };
@@ -36,18 +38,36 @@ class LessonCell extends Component {
         this.props.changeClassNumber({
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
+            indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
     };
 
     render() {
-        const { lessons, article, teachers, classNumbers,
+        const { lessons, article, teachers, classNumbers, collision,
             lessonId, teacherId, classNumber } = this.props;
+
+        let stylesLesson = styles.left,
+            stylesTeacher = styles.left,
+            stylesClass = styles.right;
+
+        if (collision.lesson) {
+            stylesLesson = Object.assign({}, stylesLesson, styles.collision);
+        }
+        if (collision.teacher) {
+            stylesTeacher = Object.assign({}, stylesTeacher, styles.collision);
+        }
+        if (collision.class) {
+            stylesClass = Object.assign({}, stylesClass, styles.collision);
+        }
+
+        // console.log(this.props);
 
         return (
             <div className="day-cell">
                 <div style={styles.line}>
-                    <Dropdown style={styles.left} data={lessons} title={lessons[lessonId]} currentIndex={lessonId}
+                    <Dropdown style={stylesLesson} data={lessons} title={lessons[lessonId]}
+                              currentIndex={lessonId}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
                               styleHoverItem={styles.hoverItem}
@@ -55,13 +75,15 @@ class LessonCell extends Component {
                     <Article style={styles.right} value={article || 'article'} />
                 </div>
                 <div style={styles.line}>
-                    <Dropdown style={styles.left} data={teachers} title={teachers[teacherId]} currentIndex={teacherId}
+                    <Dropdown style={stylesTeacher} data={teachers} title={teachers[teacherId]}
+                              currentIndex={teacherId}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
                               styleHoverItem={styles.hoverItem}
                               clickSelectItem={this.clickTeachersSelectItem} />
 
-                    <Dropdown style={styles.right} data={classNumbers} title={classNumbers[classNumber]} currentIndex={classNumber}
+                    <Dropdown style={stylesClass} data={classNumbers} title={classNumbers[classNumber]}
+                              currentIndex={classNumber}
                               styleSelectContainer={styles.selectContainer}
                               styleSelectItem={styles.selectItem}
                               styleHoverItem={styles.hoverItem}

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 /**
  * Method for calculate easter day by year
@@ -75,6 +76,41 @@ export const getFirstMondayByMonthInYear = (year, month) => {
     */
 };
 
-export const checkLessons = () => {
+export const checkLessons = (lessons) => {
+    lessons = _.map(lessons, lesson => Object.assign({}, lesson, {
+        collision: { group: false, lesson: false, teacher: false, class: false }
+    }));
 
-} ;
+    const lessonsByWeek = _.groupBy(lessons, 'indexWeek');
+    let newLessons = [];
+
+    _.each(lessonsByWeek, lessons => {
+        const lessonsByTimeItem = _.groupBy(lessons, 'indexTimeItem');
+        _.each(lessonsByTimeItem, lessons => {
+            const lessonsByDay = _.groupBy(lessons, 'indexDay');
+            _.each(lessonsByDay, lessons => {
+                for (let i = 0; i < lessons.length; i++) {
+                    let lesson = lessons[i];
+                    const lessonsWithoutLesson = _.without(lessons, lesson);
+
+                    if (_.find(lessonsWithoutLesson, { groupId: lesson.groupId })) {
+                        lesson.collision.group = true;
+                    }
+                    // if (_.find(lessonsWithoutLesson, { lessonId: lesson.lessonId })) {
+                    //     lesson.collision.lesson = true;
+                    // }
+                    if (_.find(lessonsWithoutLesson, { teacherId: lesson.teacherId })) {
+                        lesson.collision.teacher = true;
+                    }
+                    if (_.find(lessonsWithoutLesson, { classNumber: lesson.classNumber })) {
+                        lesson.collision.class = true;
+                    }
+
+                    newLessons.push(lesson);
+                }
+            });
+        });
+    });
+
+    return lessons;
+};

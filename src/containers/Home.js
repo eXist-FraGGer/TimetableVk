@@ -15,12 +15,21 @@ export class Home extends Component {
         }
     }
 
+    onClickGetState = () => {
+        console.log(JSON.stringify(this.props.state));
+    };
+
     render() {
+        const lessonsByWeek = _.groupBy(this.props.lessons, 'indexWeek');
+
         return (
             <div>
-                {_.map(new Array(4), (value, index) => {
+                <div>
+                    <button onClick={this.onClickGetState}>Get State</button>
+                </div>
+                {_.map(new Array(1), (value, index) => {
                     return (
-                        <Timetable key={index} first={index===0} weekNumber={index}
+                        <Timetable key={index} first={index===0} indexWeek={index} lessons={lessonsByWeek[index]}
                                    firstDate={moment(this.props.firstDate).add(index * 7, 'days')} />
                     )
                 })}
@@ -31,6 +40,8 @@ export class Home extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        state: state,
+        lessons: state.lessons,
         firstDate: state.timetable.firstDate,
         holidays: state.timetable.holidays
     };

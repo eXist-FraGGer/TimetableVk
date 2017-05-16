@@ -16,12 +16,13 @@ class DayCollContainer extends Component {
 
     render() {
         const lessons = _.sortBy(this.props.lessons, 'indexItem'),
-            lesson0 = _.find(lessons, { indexItem: 0 }) || { indexItem: 0, indexDay: this.props.indexDay, empty: true },
-            lesson1 = _.find(lessons, { indexItem: 1 }) || { indexItem: 1, indexDay: this.props.indexDay, empty: true },
-            lesson2 = _.find(lessons, { indexItem: 2 }) || { indexItem: 2, indexDay: this.props.indexDay, empty: true },
-            lesson3 = _.find(lessons, { indexItem: 3 }) || { indexItem: 3, indexDay: this.props.indexDay, empty: true };
+            lesson = [];
+        lesson[0] = _.find(lessons, { indexItem: 0 }) || { indexItem: 0, indexDay: this.props.indexDay, empty: true };
+        lesson[1] = _.find(lessons, { indexItem: 1 }) || { indexItem: 1, indexDay: this.props.indexDay, empty: true };
+        lesson[2] = _.find(lessons, { indexItem: 2 }) || { indexItem: 2, indexDay: this.props.indexDay, empty: true };
+        lesson[3] = _.find(lessons, { indexItem: 3 }) || { indexItem: 3, indexDay: this.props.indexDay, empty: true };
 
-        //console.log(lessons, lesson0, lesson1, lesson2);
+        // console.log(lessons, lesson);
 
         if (_.some(this.props.holidays, value =>
                 moment(value, 'YYYY-MM-DD').isSame(moment(this.props.day, 'YYYY-MM-DD')) )) {
@@ -36,18 +37,13 @@ class DayCollContainer extends Component {
 
         return (
             <div className="day-col">
-                <Lesson onMove={this.props.onMove} day={this.props.day} key={0} {...lesson0}
-                        indexTimeItem={this.props.indexTimeItem} groups={this.props.groups}
-                        changeGroup={this.props.changeGroup} />
-                <Lesson onMove={this.props.onMove} day={this.props.day} key={1} {...lesson1}
-                        indexTimeItem={this.props.indexTimeItem} groups={this.props.groups}
-                        changeGroup={this.props.changeGroup} />
-                <Lesson onMove={this.props.onMove} day={this.props.day} key={2} {...lesson2}
-                        indexTimeItem={this.props.indexTimeItem} groups={this.props.groups}
-                        changeGroup={this.props.changeGroup} />
-                <Lesson onMove={this.props.onMove} day={this.props.day} key={3} {...lesson3}
-                        indexTimeItem={this.props.indexTimeItem} groups={this.props.groups}
-                        changeGroup={this.props.changeGroup} />
+                {_.map(lesson, (lesson, index) => {
+                    return (
+                        <Lesson onMove={this.props.onMove} day={this.props.day} key={index} {...lesson}
+                                indexTimeItem={this.props.indexTimeItem} indexWeek={this.props.indexWeek}
+                                groups={this.props.groups} changeGroup={this.props.changeGroup} />
+                    );
+                })}
             </div>
         );
     }

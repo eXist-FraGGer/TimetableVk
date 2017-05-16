@@ -16,19 +16,21 @@ export class Timetable extends Component {
     }
 
     render() {
+        const timeItems = _.groupBy(this.props.lessons, 'indexTimeItem');
+
         return (
             <div>
                 <Grid className="" fluid>
                     <Row xs={12} style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
-                        <h3>Неделя №{this.props.weekNumber}</h3>
+                        <h3>Неделя №{this.props.indexWeek}</h3>
                     </Row>
 
                 	<Header first={this.props.first} firstDate={this.props.firstDate} />
 
-                    {_.map(this.props.allLessons, (lessons, index) => {
+                    {_.map(timeItems, (lessons, index) => {
                         return (
-                            <TimeItem key={index} firstDate={this.props.firstDate}
-                                      lessons={lessons} indexTimeItem={index} />
+                            <TimeItem key={index} firstDate={this.props.firstDate} lessons={lessons}
+                                      indexWeek={this.props.indexWeek} indexTimeItem={+index} />
                         );
                     })}
 
@@ -40,7 +42,6 @@ export class Timetable extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        allLessons: state.lessons
     };
 };
 
