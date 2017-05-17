@@ -78,7 +78,7 @@ export const getFirstMondayByMonthInYear = (year, month) => {
 
 export const checkLessons = (lessons) => {
     lessons = _.map(lessons, lesson => Object.assign({}, lesson, {
-        collision: { group: false, lesson: false, teacher: false, class: false }
+        collision: { group: false, lesson: false, teacher: false, class: false, article: false }
     }));
 
     const lessonsByWeek = _.groupBy(lessons, 'indexWeek');

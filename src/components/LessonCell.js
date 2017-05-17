@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // import moment from 'moment';
-import { changeLesson, changeTeacher, changeClassNumber } from '../actions/lessons';
+import { changeLesson, changeTeacher, changeClassNumber, changeArticle } from '../actions/lessons';
 import { Dropdown, Article } from '../components';
 // import _ from 'lodash';
 
@@ -23,6 +23,7 @@ class LessonCell extends Component {
             indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
+        this.props.disHover();
     };
 
     clickTeachersSelectItem = (index) => {
@@ -32,6 +33,7 @@ class LessonCell extends Component {
             indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
+        this.props.disHover();
     };
 
     clickClassNumbersSelectItem = (index) => {
@@ -41,6 +43,17 @@ class LessonCell extends Component {
             indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
         }, index);
+        this.props.disHover();
+    };
+
+    changeArticle = e => {
+        this.props.changeArticle({
+            indexDay: this.props.indexDay,
+            indexItem: this.props.indexItem,
+            indexWeek: this.props.indexWeek,
+            indexTimeItem: this.props.indexTimeItem
+        }, e.target.value);
+        this.props.disHover();
     };
 
     render() {
@@ -72,7 +85,8 @@ class LessonCell extends Component {
                               styleSelectItem={styles.selectItem}
                               styleHoverItem={styles.hoverItem}
                               clickSelectItem={this.clickLessonsSelectItem} />
-                    <Article style={styles.right} value={article || 'article'} />
+                    <Article style={styles.right} value={article}
+                             changeArticle={this.changeArticle} />
                 </div>
                 <div style={styles.line}>
                     <Dropdown style={stylesTeacher} data={teachers} title={teachers[teacherId]}
@@ -107,7 +121,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         changeClassNumber: bindActionCreators(changeClassNumber, dispatch),
         changeTeacher: bindActionCreators(changeTeacher, dispatch),
-        changeLesson: bindActionCreators(changeLesson, dispatch)
+        changeLesson: bindActionCreators(changeLesson, dispatch),
+        changeArticle: bindActionCreators(changeArticle, dispatch)
     }
 };
 

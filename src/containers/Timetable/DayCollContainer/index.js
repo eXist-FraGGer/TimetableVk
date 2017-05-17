@@ -40,8 +40,7 @@ class DayCollContainer extends Component {
                 {_.map(lesson, (lesson, index) => {
                     return (
                         <Lesson onMove={this.props.onMove} day={this.props.day} key={index} {...lesson}
-                                indexTimeItem={this.props.indexTimeItem} indexWeek={this.props.indexWeek}
-                                groups={this.props.groups} changeGroup={this.props.changeGroup} />
+                                indexTimeItem={this.props.indexTimeItem} indexWeek={this.props.indexWeek} />
                     );
                 })}
             </div>

@@ -12,6 +12,7 @@ const initial_state = [{
     lessonId: 0,
     teacherId: 0,
     classNumber: 0,
+    article: 'article',
     collision: {
         group: false,
         teacher: false,
@@ -25,7 +26,8 @@ const initial_state = [{
     groupId: 2,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -34,7 +36,8 @@ const initial_state = [{
     groupId: 3,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -43,7 +46,8 @@ const initial_state = [{
     groupId: 4,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -52,7 +56,8 @@ const initial_state = [{
     groupId: 0,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -61,7 +66,8 @@ const initial_state = [{
     groupId: 5,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -70,7 +76,8 @@ const initial_state = [{
     groupId: 7,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 0,
     indexWeek: 0,
@@ -79,7 +86,8 @@ const initial_state = [{
     groupId: 8,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -88,7 +96,8 @@ const initial_state = [{
     groupId: 6,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -97,7 +106,8 @@ const initial_state = [{
     groupId: 2,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -106,7 +116,8 @@ const initial_state = [{
     groupId: 3,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -115,7 +126,8 @@ const initial_state = [{
     groupId: 4,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -124,7 +136,8 @@ const initial_state = [{
     groupId: 0,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -133,7 +146,8 @@ const initial_state = [{
     groupId: 5,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -142,7 +156,8 @@ const initial_state = [{
     groupId: 7,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 1,
     indexWeek: 0,
@@ -151,7 +166,8 @@ const initial_state = [{
     groupId: 8,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -160,7 +176,8 @@ const initial_state = [{
     groupId: 6,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -169,7 +186,8 @@ const initial_state = [{
     groupId: 2,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -178,7 +196,8 @@ const initial_state = [{
     groupId: 3,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -187,7 +206,8 @@ const initial_state = [{
     groupId: 4,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -196,7 +216,8 @@ const initial_state = [{
     groupId: 0,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -205,7 +226,8 @@ const initial_state = [{
     groupId: 5,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -214,7 +236,8 @@ const initial_state = [{
     groupId: 7,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 2,
     indexWeek: 0,
@@ -223,7 +246,8 @@ const initial_state = [{
     groupId: 8,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -232,7 +256,8 @@ const initial_state = [{
     groupId: 6,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -241,7 +266,8 @@ const initial_state = [{
     groupId: 2,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -250,7 +276,8 @@ const initial_state = [{
     groupId: 3,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -259,7 +286,8 @@ const initial_state = [{
     groupId: 4,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -268,7 +296,8 @@ const initial_state = [{
     groupId: 0,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -277,7 +306,8 @@ const initial_state = [{
     groupId: 5,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -286,7 +316,8 @@ const initial_state = [{
     groupId: 7,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
@@ -295,7 +326,8 @@ const initial_state = [{
     groupId: 8,
     lessonId: 0,
     teacherId: 0,
-    classNumber: 0
+    classNumber: 0,
+    article: 'article'
 }
 ];
 
@@ -304,8 +336,6 @@ export default function (state = initial_state, action) {
 
         case types.MOVE: {
             const { source, target } = action.payload;
-
-            // console.log(source, target);
 
             let newState = _.map(state, object => Object.assign({}, object));
 
@@ -409,8 +439,6 @@ export default function (state = initial_state, action) {
         case types.CHANGE_LESSON: {
             const { lesson, newLessonId } = action.payload;
 
-            console.log(lesson, newLessonId);
-
             const newState = _.map(state, object => Object.assign({}, object));
 
             const lessonIndex = _.findIndex(newState, {
@@ -421,6 +449,46 @@ export default function (state = initial_state, action) {
             });
 
             newState[lessonIndex].lessonId = newLessonId;
+
+            return [ ...checkLessons(newState) ];
+        }
+
+        case types.CHANGE_ARTICLE: {
+            const { lesson, newArticle } = action.payload;
+
+            const newState = _.map(state, object => Object.assign({}, object));
+
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: lesson.indexWeek,
+                indexTimeItem: lesson.indexTimeItem,
+                indexDay: lesson.indexDay,
+                indexItem: lesson.indexItem,
+            });
+
+            newState[lessonIndex].article = newArticle;
+
+            return [ ...checkLessons(newState) ];
+        }
+
+        case types.ADD: {
+            const newState = _.map(state, object => Object.assign({}, object));
+
+            newState.push(action.payload);
+
+            return [ ...checkLessons(newState) ];
+        }
+
+        case types.DELETE: {
+            const newState = _.map(state, object => Object.assign({}, object));
+
+            const lessonIndex = _.findIndex(newState, {
+                indexWeek: action.payload.indexWeek,
+                indexTimeItem: action.payload.indexTimeItem,
+                indexDay: action.payload.indexDay,
+                indexItem: action.payload.indexItem,
+            });
+
+            delete newState[lessonIndex];
 
             return [ ...checkLessons(newState) ];
         }

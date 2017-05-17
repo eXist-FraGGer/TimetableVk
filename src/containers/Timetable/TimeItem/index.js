@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { move, changeGroup } from '../../../actions/lessons';
+import { move } from '../../../actions/lessons';
 
 import { TextCell } from '../../../components';
 import DayCollContainer   from '../DayCollContainer';
@@ -40,9 +40,7 @@ export class TimeItem extends Component {
                             lessons={lessonsGroupByDay[`${index}`] || []} key={index} onMove={this.onMove}
                             indexTimeItem={this.props.indexTimeItem}
                             indexWeek={this.props.indexWeek}
-                            holidays={this.props.holidays}
-                            groups={this.props.groups}
-                            changeGroup={this.props.changeGroup} />
+                            holidays={this.props.holidays} />
                     );
                 })}
 
@@ -61,8 +59,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        move: bindActionCreators(move, dispatch),
-        changeGroup: bindActionCreators(changeGroup, dispatch),
+        move: bindActionCreators(move, dispatch)
     }
 };
 
