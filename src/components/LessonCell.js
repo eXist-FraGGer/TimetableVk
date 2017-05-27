@@ -46,13 +46,13 @@ class LessonCell extends Component {
         this.props.disHover();
     };
 
-    changeArticle = e => {
+    changeArticle = value => {
         this.props.changeArticle({
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
             indexWeek: this.props.indexWeek,
             indexTimeItem: this.props.indexTimeItem
-        }, e.target.value);
+        }, value);
         this.props.disHover();
     };
 

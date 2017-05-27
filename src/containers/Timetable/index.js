@@ -16,7 +16,8 @@ export class Timetable extends Component {
     }
 
     render() {
-        const timeItems = _.groupBy(this.props.lessons, 'indexTimeItem');
+        const timeItems = _.groupBy(_.filter(this.props.lessons, lesson =>
+            this.props.times.hasOwnProperty(`${lesson.indexTimeItem}`)), 'indexTimeItem');
 
         return (
             <div>
@@ -29,6 +30,7 @@ export class Timetable extends Component {
 
                     {_.map(timeItems, (lessons, index) => {
                         return (
+                            this.props.times[index] &&
                             <TimeItem key={index} firstDate={this.props.firstDate} lessons={lessons}
                                       indexWeek={this.props.indexWeek} indexTimeItem={+index} />
                         );
@@ -42,6 +44,7 @@ export class Timetable extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        times: state.timetable.times
     };
 };
 

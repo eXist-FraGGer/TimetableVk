@@ -22,23 +22,23 @@ export class Header extends Component {
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
                 	<DayCell first={this.props.first}
                              title="Понедельник"
-                             date={moment(this.props.firstDate).format('DD.MM')} />
+                             date={this.props.firstDate} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Вторник" date={moment(this.props.firstDate).add(1, 'day').format('DD.MM')} />
+					<DayCell title="Вторник" date={moment(this.props.firstDate).add(1, 'day')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Среда" date={moment(this.props.firstDate).add(2, 'day').format('DD.MM')} />
+					<DayCell title="Среда" date={moment(this.props.firstDate).add(2, 'day')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Четверг" date={moment(this.props.firstDate).add(3, 'day').format('DD.MM')} />
+					<DayCell title="Четверг" date={moment(this.props.firstDate).add(3, 'day')} />
                 </div>
             	<div className="day-col">
                 	<div className="group-cell"><TextCell value="Уч. Группа" /></div>
-					<DayCell title="Пятница" date={moment(this.props.firstDate).add(4, 'day').format('DD.MM')} />
+					<DayCell title="Пятница" date={moment(this.props.firstDate).add(4, 'day')} />
                 </div>
             </div>
         );

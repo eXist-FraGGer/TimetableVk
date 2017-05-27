@@ -85,3 +85,13 @@ export const addLesson = (lesson) => {
 export const deleteLesson = (lesson) => {
     return { type: types.DELETE, payload: lesson };
 };
+
+/**
+ * set state
+ *
+ * @param data
+ * @returns {{type: string, payload: *}}
+ */
+export const setStateLessons = (data) => {
+    return { type: types.SET_STATE_LESSONS, payload: data };
+};

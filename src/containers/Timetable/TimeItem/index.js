@@ -6,7 +6,9 @@ import _ from 'lodash';
 
 import { move } from '../../../actions/lessons';
 
-import { TextCell } from '../../../components';
+import { changeTime, deleteTimeItem } from '../../../actions/timetable';
+
+import { TimeCell } from '../../../components';
 import DayCollContainer   from '../DayCollContainer';
 
 import '../../../style/TimeItem.css';
@@ -23,6 +25,17 @@ export class TimeItem extends Component {
         return this.props.move(sourceProps, targetProps);
     };
 
+    changeTime = (times) => {
+        this.props.changeTime({
+            indexTimeItem: this.props.indexTimeItem,
+            times: times
+        });
+    };
+
+    delteTimeItem = () => {
+        this.props.deleteTimeItem({ indexTimeItem: this.props.indexTimeItem });
+    };
+
     render() {
         const lessonsGroupByDay = _.groupBy(this.props.lessons, 'indexDay');
         const currentTimes = this.props.times[this.props.indexTimeItem];
@@ -31,7 +44,7 @@ export class TimeItem extends Component {
 
         return (
             <div className="time-item">
-                <div className="time-cell"><TextCell value={times} /></div>
+                <TimeCell value={times} changeTime={this.changeTime} delteTimeItem={this.delteTimeItem} />
 
                 {_.map(new Array(5), (v, index) => {
                     return (
@@ -59,7 +72,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        move: bindActionCreators(move, dispatch)
+        move: bindActionCreators(move, dispatch),
+        changeTime: bindActionCreators(changeTime, dispatch),
+        deleteTimeItem: bindActionCreators(deleteTimeItem, dispatch)
     }
 };
 

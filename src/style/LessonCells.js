@@ -25,11 +25,13 @@ export default {
     right: {
         display: 'flex',
         justifyContent: 'flex-end',
-        flex: 0.5
+        flex: 0.5,
+        textAlign: 'right'
     },
     left: {
         display: 'flex',
-        flex: 0.5
+        flex: 0.5,
+        textAlign: 'left'
     },
     collision: {
         backgroundColor: 'red'

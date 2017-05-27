@@ -15,10 +15,22 @@ class DayCell extends Component {
     };
 
     changeDate = e => {
-        this.props.setDate(moment(e.target.value, 'Y-MM'));
+        this.props.setDate(moment(e.target.value));
     };
 
+    // componentWillReceiveProps(nextProps) {
+    //     nextProps.first && console.log(nextProps.date.format(), moment(nextProps.date));
+    //     nextProps.load && this.setState({ date: moment(nextProps.date) });
+    // }
+
     render() {
+        if (this.props.empty) {
+            return <div className="day-cell">
+                    <div className="title">-</div>
+                    <div className="date">-</div>
+                </div>
+        }
+
         return (
             <div className="day-cell">
                 <div className="title">
@@ -30,8 +42,8 @@ class DayCell extends Component {
                             type="month"
                             onChange={this.changeDate}
                             style={{ minWidth: 80, width: '100%', margin: 0, padding: 0 }}
-                            defaultValue={moment().format('Y-MM')} />)
-                        : this.props.date}
+                            defaultValue={this.props.firstDate.format('Y-MM')} />)
+                        : this.props.date.format('DD.MM')}
                 </div>
             </div>
         );
@@ -40,6 +52,8 @@ class DayCell extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        load: state.timetable.load,
+        firstDate: state.timetable.firstDate
     };
 };
 

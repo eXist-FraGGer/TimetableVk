@@ -321,7 +321,7 @@ const initial_state = [{
 }, {
     indexTimeItem: 3,
     indexWeek: 0,
-    indexDay: 4,
+    indexDay: 3,
     indexItem: 2,
     groupId: 8,
     lessonId: 0,
@@ -333,6 +333,13 @@ const initial_state = [{
 
 export default function (state = initial_state, action) {
     switch (action.type) {
+        case types.SET_STATE_LESSONS: {
+            return [
+                ..._.map(action.payload, object => {
+                    return Object.assign({}, object);
+                })
+            ];
+        }
 
         case types.MOVE: {
             const { source, target } = action.payload;

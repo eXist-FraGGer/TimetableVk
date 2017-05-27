@@ -7,10 +7,11 @@ import { ItemTypes }        from '../../../constants';
 import {
     Button,
     Modal,
+    Form,
     FormGroup,
     ControlLabel,
     FormControl,
-    Col
+    Col, Row
 } from 'react-bootstrap';
 import { DragSource, DropTarget } from 'react-dnd';
 import _ from 'lodash';
@@ -40,10 +41,20 @@ const lessonSource = {
 
         // const item = monitor.getItem();
         // const dropResult = monitor.getDropResult();
+    },
+    isDragging(targetProps, monitor) {
+        // const sourceProps = monitor.getItem();
+       // console.log('isDragging', sourceProps, targetProps);
     }
 };
 
 const lessonTarget = {
+    canDrop(targetProps, monitor) {
+        const sourceProps = monitor.getItem();
+        return (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
+            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)
+            || (targetProps.indexWeek !== sourceProps.indexWeek);
+    },
     drop(targetProps, monitor) {
         const sourceProps = monitor.getItem();
 
@@ -52,6 +63,10 @@ const lessonTarget = {
             || (targetProps.indexWeek !== sourceProps.indexWeek) ) {
             targetProps.onMove(sourceProps, targetProps);
         }
+    },
+    hover(props, monitor, component) {
+        const sourceProps = monitor.getItem();
+        // console.log('hover', sourceProps, props, component);
     }
 };
 
@@ -79,9 +94,13 @@ class Lesson extends Component {
             newLessonId: 0,
             newTeacherId: 0,
             newClassNumber: 0,
-            newArticle: '',
             showDeleteLessonModal: false,
-            showAddLessonModal: false
+            showAddLessonModal: false,
+
+            lessonTypeId: 0,
+            subject: '2',
+            lesson: '2',
+            hour: '2',
         }
     };
 
@@ -105,7 +124,7 @@ class Lesson extends Component {
     };
 
     canDrop = () => {
-        return false;
+        return true;
     };
 
     onMouseEnterHandler = () => {
@@ -130,11 +149,11 @@ class Lesson extends Component {
             lessonId: this.state.newLessonId,
             teacherId: this.state.newTeacherId,
             classNumber: this.state.newClassNumber,
-            article: this.state.newArticle,
             indexDay: this.props.indexDay,
             indexItem: this.props.indexItem,
             indexTimeItem: this.props.indexTimeItem,
-            indexWeek: this.props.indexWeek
+            indexWeek: this.props.indexWeek,
+            article: `${this.state.subject}-${this.state.lesson}-${this.state.hour}${this.props.lessonTypes[this.state.lessonTypeId]}`
         });
         this.setState({ showAddLessonModal: false });
     };
@@ -165,6 +184,21 @@ class Lesson extends Component {
         this.setState({ newClassNumber: +e.target.value });
     };
 
+    selectLessonType = e => {
+        this.setState({ lessonTypeId: +e.target.value });
+    };
+
+    setSubject = e => {
+        this.setState({ subject: e.target.value });
+    };
+
+    setLesson = e => {
+        this.setState({ lesson: e.target.value });
+    };
+
+    setHour = e => {
+        this.setState({ hour: e.target.value });
+    };
 
     render() {
         const { connectDragSource, isOver, canDrop, connectDropTarget, collision,
@@ -175,6 +209,7 @@ class Lesson extends Component {
                 <div className="day-col-item"
                      onMouseEnter={this.onMouseEnterHandler}
                      onMouseLeave={this.onMouseLeaveHandler} >
+
                     <Modal
                         style={{ textAlign: 'center', borderRadius: 20, backgroundColor: 'transparent' }}
                         show={this.state.showAddLessonModal}
@@ -186,61 +221,93 @@ class Lesson extends Component {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <FormGroup controlId="formControlsSelectGroup">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Группа
-                                </Col>
-                                <Col sm={10}>
+                            <Form horizontal>
+                                <FormGroup controlId="formControlsSelectGroup" bsClass="col-xs-3">
+                                    <ControlLabel>Группа</ControlLabel>
+                                    {' '}
                                     <FormControl componentClass="select" placeholder="Выберите группу"
                                                  value={this.state.newGroupId} onChange={this.selectNewGroup}>
                                         {_.map(this.props.groups, (group, index) => {
                                             return (<option key={index} value={index}>{group}</option>);
                                         })}
                                     </FormControl>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId="formControlsSelectLesson">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Предмет
-                                </Col>
-                                <Col sm={10}>
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formControlsSelectLesson" bsClass="col-xs-3">
+                                    <ControlLabel>Предмет</ControlLabel>
+                                    {' '}
                                     <FormControl componentClass="select" placeholder="Выберите предмет"
                                                  value={this.state.newLessonId} onChange={this.selectNewLesson}>
                                         {_.map(this.props.lessons, (lesson, index) => {
                                             return (<option key={index} value={index}>{lesson}</option>);
                                         })}
                                     </FormControl>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId="formControlsSelectTeacher">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Преподаватель
-                                </Col>
-                                <Col sm={10}>
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formControlsSelectTeacher" bsClass="col-xs-3">
+                                    <ControlLabel>Преподаватель</ControlLabel>
+                                    {' '}
                                     <FormControl componentClass="select" placeholder="Выберите преподавателя"
                                                  value={this.state.newTeacherId} onChange={this.selectNewTeacher}>
                                         {_.map(this.props.teachers, (teacher, index) => {
                                             return (<option key={index} value={index}>{teacher}</option>);
                                         })}
                                     </FormControl>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId="formControlsSelectClass">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Место проведения занятия
-                                </Col>
-                                <Col sm={10}>
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formControlsSelectClass" bsClass="col-xs-3">
+                                    <ControlLabel>Место проведения</ControlLabel>
+                                    {' '}
                                     <FormControl componentClass="select" placeholder="Выберите место проведения занятия"
                                                  value={this.state.newClassNumber} onChange={this.selectNewClassNumber}>
                                         {_.map(this.props.classNumbers, (classNumber, index) => {
                                             return (<option key={index} value={index}>{classNumber}</option>);
                                         })}
                                     </FormControl>
-                                </Col>
-                            </FormGroup>
+                                </FormGroup>
+                                {' '}
+                            </Form>
 
-                            <Button bsStyle='success' onClick={this.addLesson}>Добавить</Button>
-                            <Button bsStyle='danger' type="submit" onClick={this.handleShowAddLessonModal}>Отмена</Button>
+                            <Form inline bsClass="col-xs-12 " style={{ marginBottom: 10 }}>
+                                <FormGroup controlId="formInlineName" bsClass="col-xs-3">
+                                    <ControlLabel>Тема</ControlLabel>
+                                    {' '}
+                                    <FormControl type="text" placeholder="2" style={{ width: '100%' }}
+                                                 onChange={this.setSubject} />
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formInlineEmail" bsClass="col-xs-3">
+                                    <ControlLabel>Занятие</ControlLabel>
+                                    {' '}
+                                    <FormControl type="text" placeholder="2" style={{ width: '100%' }}
+                                                 onChange={this.setLesson} />
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formInlineEmail" bsClass="col-xs-3">
+                                    <ControlLabel>Часы</ControlLabel>
+                                    {' '}
+                                    <FormControl type="text" placeholder="2" style={{ width: '100%' }}
+                                                 onChange={this.setHour} />
+                                </FormGroup>
+                                {' '}
+                                <FormGroup controlId="formControlsSelectGroup" bsClass="col-xs-3">
+                                    <ControlLabel>Тип занятия</ControlLabel>
+                                    <FormControl componentClass="select" placeholder="Вид занятия"
+                                                 style={{ width: '100%' }}
+                                                 value={this.state.lessonTypeId}
+                                                 onChange={this.selectLessonType}>
+                                        {_.map(this.props.lessonTypes, (lessonType, index) => {
+                                            return (<option key={index} value={index}>{lessonType}</option>);
+                                        })}
+                                    </FormControl>
+                                </FormGroup>
+                                {' '}
+                            </Form>
+                            {' '}
+                            <Row>
+                                <Button bsStyle='success' onClick={this.addLesson}>Добавить</Button>
+                                <Button bsStyle='danger' type="submit" onClick={this.handleShowAddLessonModal}>Отмена</Button>
+                            </Row>
                         </Modal.Body>
                     </Modal>
 
@@ -252,11 +319,11 @@ class Lesson extends Component {
                     </Button>}
 
                     <div className="group-cell"><TextCell value={' - '} /></div>
-                    <DayCell title={' - '} date={' - '} />
+                    <DayCell empty />
                     <div className='Cell'>
-                        {isOver && canDrop && this.canDrop.call(this) && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
+                        {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                         {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
-                        {isOver && canDrop && !this.canDrop.call(this) && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
+                        {isOver && !canDrop && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
                     </div>
                 </div>
             );
@@ -315,9 +382,9 @@ class Lesson extends Component {
                             disHover={this.disHover}
                             indexTimeItem={this.props.indexTimeItem} />
                 <div className='Cell'>
-                    {isOver && canDrop && this.canDrop.call(this) && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
+                    {isOver && canDrop && <div style={{backgroundColor: 'green', width:10, height: 10}} />}
                     {!isOver && canDrop && <div style={{backgroundColor: 'yellow', width:10, height: 10}} />}
-                    {isOver && canDrop && !this.canDrop.call(this) && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
+                    {isOver && !canDrop && <div style={{backgroundColor: 'red', width:10, height: 10}} />}
                 </div>
             </div>
         ));
@@ -342,7 +409,8 @@ const mapStateToProps = (state) => {
         classNumbers: state.timetable.classNumbers,
         teachers: state.timetable.teachers,
         lessons: state.timetable.lessons,
-        groups: state.timetable.groups
+        groups: state.timetable.groups,
+        lessonTypes: state.timetable.lessonTypes
     };
 };
 
