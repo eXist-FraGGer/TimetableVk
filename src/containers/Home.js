@@ -20,9 +20,14 @@ export class Home extends Component {
         super(props);
         this.state = {
             showGetStateModal: false,
-            teachersLoad: {}
+            teachersLoad: {},
+            fileName: 'Рассписание'
         }
     }
+
+    changeFileName = e => {
+        this.setState({ fileName: e.target.value });
+    };
 
     handleShowGetStateModal = () => {
         this.setState({ showGetStateModal: !this.state.showGetStateModal });
@@ -38,7 +43,7 @@ export class Home extends Component {
 
     onClickSaveState = () => {
         const blob = new Blob([JSON.stringify(this.props.state, null, 4)], { type: 'application/json;charset=utf-8' });
-        FileSaver.saveAs(blob, 'TimeTable.json');
+        FileSaver.saveAs(blob, `${this.state.fileName || 'Рассписание'}.json`);
         this.setState({ showGetStateModal: false });
     };
 
@@ -105,10 +110,20 @@ export class Home extends Component {
                     <Modal.Body>
                         <FormGroup controlId="formControlsTextarea">
                             <ControlLabel>Данные</ControlLabel>
+                            {' '}
                             <FormControl componentClass="textarea" placeholder="Данные"
                                          value={JSON.stringify(this.props.state, null, 4)}
                                          bsSize="small" style={{minHeight: 300}} disabled />
                         </FormGroup>
+                        {' '}
+                        <FormGroup controlId="formControlsFileName">
+                            <ControlLabel>Имя файла</ControlLabel>
+                            {' '}
+                            <FormControl type="text" placeholder="Имя файла"
+                                         onChange={this.changeFileName}
+                                         defaultValue={this.state.fileName} bsSize="small" />
+                        </FormGroup>
+                        {' '}
                         <Button bsStyle='success' onClick={this.onClickSaveState}>Сохранить</Button>
                     </Modal.Body>
                 </Modal>

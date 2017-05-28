@@ -16,7 +16,7 @@ export const setDate = (date) => {
  * @param data
  * @returns {{type: string, payload: *}}
  */
-export const setStateTimeTable = (data) => {
+export const setStateTimeTable = data => {
     return { type: types.SET_STATE_TIME_TABLE, payload: data };
 };
 
@@ -26,7 +26,7 @@ export const setStateTimeTable = (data) => {
  * @param data
  * @returns {{type: string, payload: *}}
  */
-export const changeTime = (data) => {
+export const changeTime = data => {
     return { type: types.CHANGE_TIME, payload: data };
 };
 
@@ -36,6 +36,16 @@ export const changeTime = (data) => {
  * @param data
  * @returns {{type: string, payload: *}}
  */
-export const deleteTimeItem = (data) => {
+export const deleteTimeItem = data => {
     return { type: types.DELETE_TIME_ITEM, payload: data };
+};
+
+/**
+ * Add Time Item
+ *
+ * @param data
+ * @returns {{type: string, payload: *}}
+ */
+export const addTimeItem = data => {
+    return { type: types.ADD_TIME_ITEM, payload: data };
 };

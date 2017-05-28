@@ -149,7 +149,7 @@ class TimeCell extends Component {
                 </div>
 
                 {this.state.hover &&
-                <Button style={{position: 'absolute', left: 0, marginTop: 50}}
+                <Button style={{position: 'absolute', left: 0, marginTop: 55}}
                         bsStyle="danger" bsSize="xsmall"
                         onClick={this.handleShowDeleteTimeItemModal}>
                     -

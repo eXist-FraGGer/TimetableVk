@@ -28,10 +28,9 @@ export class Timetable extends Component {
 
                 	<Header first={this.props.first} firstDate={this.props.firstDate} />
 
-                    {_.map(timeItems, (lessons, index) => {
+                    {_.map(this.props.times, (times, index) => {
                         return (
-                            this.props.times[index] &&
-                            <TimeItem key={index} firstDate={this.props.firstDate} lessons={lessons}
+                            <TimeItem key={index} firstDate={this.props.firstDate} lessons={timeItems[index]}
                                       indexWeek={this.props.indexWeek} indexTimeItem={+index} />
                         );
                     })}

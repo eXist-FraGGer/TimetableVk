@@ -39,7 +39,7 @@ export default function (state = initial_state, action) {
 
             return {
                 ...state,
-                firstDate: getFirstMondayByMonthInYear(date.year(), date.month()),
+                firstDate: moment(date),
                 holidays: getHolidaysByYear(date.year())
             };
         }
@@ -66,6 +66,21 @@ export default function (state = initial_state, action) {
                 ...state,
                 times: newTimes
             };
+        }
+
+        case types.ADD_TIME_ITEM: {
+            let newId = 0;
+            _.each(state.times, (times, index) => {
+                newId = index > newId ? index : newId;
+            });
+
+            return {
+                ...state,
+                times: {
+                    ...state.times,
+                    [newId + 1]: action.payload
+                }
+            }
         }
 
         default: return state

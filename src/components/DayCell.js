@@ -15,13 +15,15 @@ class DayCell extends Component {
     };
 
     changeDate = e => {
+        console.log('DayCell changeDate', moment(e.target.value).format('Y-MM'));
+
         this.props.setDate(moment(e.target.value));
     };
 
-    // componentWillReceiveProps(nextProps) {
-    //     nextProps.first && console.log(nextProps.date.format(), moment(nextProps.date));
-    //     nextProps.load && this.setState({ date: moment(nextProps.date) });
-    // }
+    componentWillReceiveProps(nextProps) {
+        // nextProps.first && console.log(nextProps.date.format());
+        //nextProps.load && this.setState({ date: moment(nextProps.date) });
+    }
 
     render() {
         if (this.props.empty) {
@@ -39,10 +41,10 @@ class DayCell extends Component {
                 <div className="date">
                     { this.props.first
                         ? (<input
-                            type="month"
+                            type="date"
                             onChange={this.changeDate}
                             style={{ minWidth: 80, width: '100%', margin: 0, padding: 0 }}
-                            defaultValue={this.props.firstDate.format('Y-MM')} />)
+                            value={this.props.date.format('YYYY-MM-DD')} />)
                         : this.props.date.format('DD.MM')}
                 </div>
             </div>
