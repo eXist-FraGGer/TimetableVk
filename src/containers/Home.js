@@ -20,14 +20,9 @@ export class Home extends Component {
         super(props);
         this.state = {
             showGetStateModal: false,
-            teachersLoad: {},
-            fileName: 'Рассписание'
+            teachersLoad: {}
         }
     }
-
-    changeFileName = e => {
-        this.setState({ fileName: e.target.value });
-    };
 
     handleShowGetStateModal = () => {
         this.setState({ showGetStateModal: !this.state.showGetStateModal });
@@ -42,8 +37,30 @@ export class Home extends Component {
     };
 
     onClickSaveState = () => {
+        console.log(this.inputFileName.value);
+
         const blob = new Blob([JSON.stringify(this.props.state, null, 4)], { type: 'application/json;charset=utf-8' });
-        FileSaver.saveAs(blob, `${this.state.fileName || 'Рассписание'}.json`);
+        FileSaver.saveAs(blob, `${this.inputFileName.value || 'Рассписание'}.json`);
+        this.setState({ showGetStateModal: false });
+    };
+
+    onClickExportState = () => {
+        const { lessons, timetable } = this.props.state;
+        const value = { lessons, timetable };
+
+        fetch("http://localhost:8000/", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(value)
+        }).then(res => res.json()).then(data => {
+            if (data.message !== 'successfully') {
+                new Error('Ошибка...');
+            }
+            window.open('http://localhost:8000/download', '_blank').focus();
+        }).catch(err => alert(JSON.stringify(err)));
         this.setState({ showGetStateModal: false });
     };
 
@@ -120,11 +137,13 @@ export class Home extends Component {
                             <ControlLabel>Имя файла</ControlLabel>
                             {' '}
                             <FormControl type="text" placeholder="Имя файла"
-                                         onChange={this.changeFileName}
-                                         defaultValue={this.state.fileName} bsSize="small" />
+                                         defaultValue="Рассписание"
+                                         inputRef={input => this.inputFileName = input}
+                                         bsSize="small" />
                         </FormGroup>
                         {' '}
                         <Button bsStyle='success' onClick={this.onClickSaveState}>Сохранить</Button>
+                        <Button bsStyle='success' onClick={this.onClickExportState}>Экспортировать в DOCX</Button>
                     </Modal.Body>
                 </Modal>
 

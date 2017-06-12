@@ -14,12 +14,43 @@ import _ from 'lodash';
 class Article extends Component {
     constructor(props) {
         super(props);
+
+        const values = this.props.value.split('-');
+
+        let hourAndType, lessonTypeId;
+
+        if (values.length === 3) {
+            hourAndType = values[2].replace(/(\d+)(\D+)/, '$1,$2').split(',');
+            lessonTypeId = _.indexOf(this.props.lessonTypes, hourAndType[1]);
+        }
+
         this.state = {
-            lessonTypeId: 0,
+            lessonTypeId: lessonTypeId || 0,
             showChangeArticleModal: false,
-            subject: '2',
-            lesson: '2',
-            hour: '2',
+            subject: (values.length === 3) ? values[0] : '2',
+            lesson: (values.length === 3) ? values[1] : '2',
+            hour: (values.length === 3) ? hourAndType[0] : '2',
+        }
+    };
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.value !== nextProps.value) {
+            const values = nextProps.value.split('-');
+
+            let hourAndType, lessonTypeId;
+
+            if (values.length === 3) {
+                hourAndType = values[2].replace(/(\d+)(\D+)/, '$1,$2').split(',');
+                lessonTypeId = _.indexOf(this.props.lessonTypes, hourAndType[1]);
+            }
+
+            this.setState({
+                lessonTypeId: lessonTypeId || 0,
+                showChangeArticleModal: false,
+                subject: (values.length === 3) ? values[0] : '2',
+                lesson: (values.length === 3) ? values[1] : '2',
+                hour: (values.length === 3) ? hourAndType[0] : '2',
+            });
         }
     };
 

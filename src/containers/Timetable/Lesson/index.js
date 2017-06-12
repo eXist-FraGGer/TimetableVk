@@ -42,19 +42,19 @@ const lessonSource = {
         // const item = monitor.getItem();
         // const dropResult = monitor.getDropResult();
     },
-    isDragging(targetProps, monitor) {
-        // const sourceProps = monitor.getItem();
-       // console.log('isDragging', sourceProps, targetProps);
-    }
+    // isDragging(targetProps, monitor) {
+    //     // const sourceProps = monitor.getItem();
+    //    // console.log('isDragging', sourceProps, targetProps);
+    // }
 };
 
 const lessonTarget = {
-    canDrop(targetProps, monitor) {
-        const sourceProps = monitor.getItem();
-        return (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
-            || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)
-            || (targetProps.indexWeek !== sourceProps.indexWeek);
-    },
+    // canDrop(targetProps, monitor) {
+    //     const sourceProps = monitor.getItem();
+    //     return (sourceProps.indexItem !== targetProps.indexItem) || (targetProps.indexDay !== sourceProps.indexDay)
+    //         || (targetProps.indexTimeItem !== sourceProps.indexTimeItem)
+    //         || (targetProps.indexWeek !== sourceProps.indexWeek);
+    // },
     drop(targetProps, monitor) {
         const sourceProps = monitor.getItem();
 
@@ -64,10 +64,10 @@ const lessonTarget = {
             targetProps.onMove(sourceProps, targetProps);
         }
     },
-    hover(props, monitor, component) {
-        const sourceProps = monitor.getItem();
-        // console.log('hover', sourceProps, props, component);
-    }
+    // hover(props, monitor, component) {
+    //     const sourceProps = monitor.getItem();
+    //     // console.log('hover', sourceProps, props, component);
+    // }
 };
 
 const collectSource = (connect, monitor) => {
@@ -88,9 +88,16 @@ const collectTarget = (connect, monitor) => {
 class Lesson extends Component {
     constructor(props) {
         super(props);
+
+        const currentGroup = _.find(this.props.defaultGroupPosition, {
+            indexDay: this.props.indexDay,
+            indexTimeItem: this.props.indexTimeItem,
+            indexItem: this.props.indexItem
+        });
+
         this.state = {
             hover: false,
-            newGroupId: 0,
+            newGroupId: currentGroup ? currentGroup.indexGroup : 0,
             newLessonId: 0,
             newTeacherId: 0,
             newClassNumber: 0,
@@ -123,9 +130,9 @@ class Lesson extends Component {
         this.setState({ hover: false });
     };
 
-    canDrop = () => {
-        return true;
-    };
+    // canDrop = () => {
+    //     return true;
+    // };
 
     onMouseEnterHandler = () => {
         this.setState({ hover: true });
@@ -204,6 +211,8 @@ class Lesson extends Component {
         const { connectDragSource, isOver, canDrop, connectDropTarget, collision,
             isDragging, groupId, lessonId, day, teacherId, classNumber, empty, article } = this.props;
 
+        // console.log(currentGroup, { indexDay: this.props.indexDay, indexTimeItem: this.props.indexTimeItem, indexItem: this.props.indexItem }, groupId);
+
         if (empty) {
             return connectDropTarget(
                 <div className="day-col-item"
@@ -226,7 +235,8 @@ class Lesson extends Component {
                                     <ControlLabel>Группа</ControlLabel>
                                     {' '}
                                     <FormControl componentClass="select" placeholder="Выберите группу"
-                                                 value={this.state.newGroupId} onChange={this.selectNewGroup}>
+                                                 value={this.state.newGroupId}
+                                                 onChange={this.selectNewGroup}>
                                         {_.map(this.props.groups, (group, index) => {
                                             return (<option key={index} value={index}>{group}</option>);
                                         })}
@@ -410,7 +420,8 @@ const mapStateToProps = (state) => {
         teachers: state.timetable.teachers,
         lessons: state.timetable.lessons,
         groups: state.timetable.groups,
-        lessonTypes: state.timetable.lessonTypes
+        lessonTypes: state.timetable.lessonTypes,
+        defaultGroupPosition: state.timetable.defaultGroupPosition
     };
 };
 

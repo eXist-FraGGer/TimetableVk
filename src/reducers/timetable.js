@@ -16,7 +16,228 @@ const initial_state = {
         1: { start: "9:35", end: "10:55" },
         2: { start: "14:35", end: "15:55" },
         3: { start: "16:10", end: "17:30" }
-    }
+    },
+    defaultGroupPosition: [{
+        indexGroup: 0,
+        indexDay: 0,
+        indexTimeItem: 0,
+        indexItem: 0
+    },{
+        indexGroup: 0,
+        indexDay: 0,
+        indexTimeItem: 1,
+        indexItem: 0
+    },{
+        indexGroup: 0,
+        indexDay: 2,
+        indexTimeItem: 0,
+        indexItem: 0
+    },{
+        indexGroup: 0,
+        indexDay: 2,
+        indexTimeItem: 1,
+        indexItem: 0
+    },{
+        indexGroup: 1,
+        indexDay: 0,
+        indexTimeItem: 2,
+        indexItem: 0
+    },{
+        indexGroup: 1,
+        indexDay: 2,
+        indexTimeItem: 2,
+        indexItem: 0
+    },{
+        indexGroup: 1,
+        indexDay: 0,
+        indexTimeItem: 3,
+        indexItem: 0
+    },{
+        indexGroup: 1,
+        indexDay: 2,
+        indexTimeItem: 3,
+        indexItem: 0
+    },{
+        indexGroup: 2,
+        indexDay: 1,
+        indexTimeItem: 0,
+        indexItem: 0
+    },{
+        indexGroup: 2,
+        indexDay: 4,
+        indexTimeItem: 0,
+        indexItem: 0
+    },{
+        indexGroup: 2,
+        indexDay: 1,
+        indexTimeItem: 1,
+        indexItem: 0
+    },{
+        indexGroup: 2,
+        indexDay: 4,
+        indexTimeItem: 1,
+        indexItem: 0
+    },{
+        indexGroup: 3,
+        indexDay: 4,
+        indexTimeItem: 2,
+        indexItem: 1
+    },{
+        indexGroup: 3,
+        indexDay: 2,
+        indexTimeItem: 2,
+        indexItem: 2
+    },{
+        indexGroup: 3,
+        indexDay: 4,
+        indexTimeItem: 3,
+        indexItem: 1
+    },{
+        indexGroup: 3,
+        indexDay: 2,
+        indexTimeItem: 3,
+        indexItem: 2
+    },{
+        indexGroup: 4,
+        indexDay: 0,
+        indexTimeItem: 2,
+        indexItem: 1
+    },{
+        indexGroup: 4,
+        indexDay: 1,
+        indexTimeItem: 2,
+        indexItem: 3
+    },{
+        indexGroup: 4,
+        indexDay: 0,
+        indexTimeItem: 3,
+        indexItem: 1
+    },{
+        indexGroup: 4,
+        indexDay: 1,
+        indexTimeItem: 3,
+        indexItem: 3
+    },{
+        indexGroup: 5,
+        indexDay: 0,
+        indexTimeItem: 2,
+        indexItem: 2
+    },{
+        indexGroup: 5,
+        indexDay: 2,
+        indexTimeItem: 2,
+        indexItem: 1
+    },{
+        indexGroup: 5,
+        indexDay: 0,
+        indexTimeItem: 3,
+        indexItem: 2
+    },{
+        indexGroup: 5,
+        indexDay: 2,
+        indexTimeItem: 3,
+        indexItem: 1
+    },{
+        indexGroup: 6,
+        indexDay: 0,
+        indexTimeItem: 0,
+        indexItem: 1
+    },{
+        indexGroup: 6,
+        indexDay: 2,
+        indexTimeItem: 0,
+        indexItem: 1
+    },{
+        indexGroup: 6,
+        indexDay: 0,
+        indexTimeItem: 1,
+        indexItem: 1
+    },{
+        indexGroup: 6,
+        indexDay: 2,
+        indexTimeItem: 1,
+        indexItem: 1
+    },{
+        indexGroup: 7,
+        indexDay: 1,
+        indexTimeItem: 2,
+        indexItem: 0
+    },{
+        indexGroup: 7,
+        indexDay: 4,
+        indexTimeItem: 2,
+        indexItem: 0
+    },{
+        indexGroup: 7,
+        indexDay: 1,
+        indexTimeItem: 3,
+        indexItem: 0
+    },{
+        indexGroup: 7,
+        indexDay: 4,
+        indexTimeItem: 3,
+        indexItem: 0
+    },{
+        indexGroup: 8,
+        indexDay: 1,
+        indexTimeItem: 2,
+        indexItem: 1
+    },{
+        indexGroup: 8,
+        indexDay: 3,
+        indexTimeItem: 2,
+        indexItem: 0
+    },{
+        indexGroup: 8,
+        indexDay: 1,
+        indexTimeItem: 3,
+        indexItem: 1
+    },{
+        indexGroup: 8,
+        indexDay: 3,
+        indexTimeItem: 3,
+        indexItem: 0
+    },{
+        indexGroup: 9,
+        indexDay: 1,
+        indexTimeItem: 2,
+        indexItem: 2
+    },{
+        indexGroup: 9,
+        indexDay: 3,
+        indexTimeItem: 2,
+        indexItem: 1
+    },{
+        indexGroup: 9,
+        indexDay: 1,
+        indexTimeItem: 3,
+        indexItem: 2
+    },{
+        indexGroup: 9,
+        indexDay: 3,
+        indexTimeItem: 3,
+        indexItem: 1
+    },{
+        indexGroup: 10,
+        indexDay: 3,
+        indexTimeItem: 2,
+        indexItem: 2
+    },{
+        indexGroup: 10,
+        indexDay: 4,
+        indexTimeItem: 2,
+        indexItem: 2
+    },{
+        indexGroup: 10,
+        indexDay: 3,
+        indexTimeItem: 3,
+        indexItem: 2
+    },{
+        indexGroup: 10,
+        indexDay: 4,
+        indexTimeItem: 3,
+        indexItem: 2
+    }]
 };
 
 export default function (state = initial_state, action) {
@@ -28,7 +249,7 @@ export default function (state = initial_state, action) {
 
             return {
                 ...state,
-                firstDate: getFirstMondayByMonthInYear(date.year(), date.month()),
+                firstDate: date,
                 holidays: getHolidaysByYear(date.year()),
                 classNumbers, teachers, lessons, groups, times
             }

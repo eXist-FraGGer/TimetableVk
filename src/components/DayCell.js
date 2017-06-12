@@ -15,7 +15,7 @@ class DayCell extends Component {
     };
 
     changeDate = e => {
-        console.log('DayCell changeDate', moment(e.target.value).format('Y-MM'));
+        // console.log('DayCell changeDate', moment(e.target.value).format('Y-MM'));
 
         this.props.setDate(moment(e.target.value));
     };

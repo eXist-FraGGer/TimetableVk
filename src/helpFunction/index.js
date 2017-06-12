@@ -96,9 +96,6 @@ export const checkLessons = (lessons) => {
                     if (_.find(lessonsWithoutLesson, { groupId: lesson.groupId })) {
                         lesson.collision.group = true;
                     }
-                    // if (_.find(lessonsWithoutLesson, { lessonId: lesson.lessonId })) {
-                    //     lesson.collision.lesson = true;
-                    // }
                     if (_.find(lessonsWithoutLesson, { teacherId: lesson.teacherId })) {
                         lesson.collision.teacher = true;
                     }
