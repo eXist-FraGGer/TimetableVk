@@ -93,7 +93,7 @@ export class Header extends Component {
                     <TextCell value="Часы занятий" />
 
                     {this.state.hover &&
-                    <Button style={{position: 'absolute', left: 0, marginTop: 12}}
+                    <Button style={{position: 'absolute', left: 15, marginTop: 12}}
                             bsStyle="info" bsSize="xsmall"
                             onClick={this.handleShowAddTimeItemModal}>
                         +

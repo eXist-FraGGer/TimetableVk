@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FileSaver from 'file-saver';
-import { Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Modal, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import FileReaderInput from 'react-file-reader-input';
 import moment from 'moment';
 import _ from 'lodash';
@@ -113,7 +113,7 @@ export class Home extends Component {
         const lessonsByWeek = _.groupBy(this.props.lessons, 'indexWeek');
 
         return (
-            <div>
+            <Row>
                 <Modal
                     style={{ textAlign: 'center', fontWeight: 700, borderRadius: 20, backgroundColor: 'transparent' }}
                     show={this.state.showGetStateModal}
@@ -147,39 +147,54 @@ export class Home extends Component {
                     </Modal.Body>
                 </Modal>
 
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    borderBottomWidth: -10,
-                    marginBottom: -20,
-                    borderBottom: '2px solid red'
+                <Col xs={10} style={{backgroundColor: 'rgba(249, 255, 0, 0.25)'}}>
+                    {_.map(new Array(4), (value, index) => {
+                        return (
+                            <Timetable key={index} first={index===0} indexWeek={index} lessons={lessonsByWeek[index]}
+                                       firstDate={moment(this.props.firstDate).add(index * 7, 'days')} />
+                        )
+                    })}
+                    {' '} <br/><br/> {' '}
+                </Col>
+
+                <Col xs={2} style={{
+                    position: 'fixed',
+                    right: 0,
+                    backgroundColor: 'rgba(249, 255, 0, 0.25)',
+                    height: '100%',
+                    paddingTop: 30
                 }}>
-                    <button onClick={this.handleShowGetStateModal}>Сохранить расписание</button>
-                    <FileReaderInput as="text" id="my-file-input" accept=".json"
-                                     onChange={this.handleFile} />
                     <div style={{
                         display: 'flex',
+                        alignItems: 'center',
                         justifyContent: 'space-around',
-                        flex: 0.8,
-                    }}>{
-                        _.map(this.state.teachersLoad, (load, id) => {
-                            return (
-                                <div key={id}>
-                                    <span>{this.props.state.timetable.teachers[id]}:</span>
-                                    <span style={{marginLeft: 10}}>{load}</span>
-                                </div>
-                            )
-                        })
-                    }</div>
-                </div>
-                {_.map(new Array(4), (value, index) => {
-                    return (
-                        <Timetable key={index} first={index===0} indexWeek={index} lessons={lessonsByWeek[index]}
-                                   firstDate={moment(this.props.firstDate).add(index * 7, 'days')} />
-                    )
-                })}
-            </div>
+                        borderBottomWidth: -10,
+                        marginBottom: -20,
+                        borderBottom: '2px solid red',
+                        flexDirection: 'column'
+                    }}>
+                        <button onClick={this.handleShowGetStateModal}>Сохранить расписание</button>
+                        {' '} <br/> {' '}
+                        <FileReaderInput as="text" id="my-file-input" accept=".json"
+                                         onChange={this.handleFile} />
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            flexDirection: 'column',
+                            paddingTop: 10
+                        }}>{
+                            _.map(this.state.teachersLoad, (load, id) => {
+                                return (
+                                    <div key={id} style={{padding: 10, textAlign: 'right'}}>
+                                        <span>{this.props.state.timetable.teachers[id]}:</span>
+                                        <span style={{marginLeft: 10}}>{load}</span>
+                                    </div>
+                                )
+                            })
+                        }</div>
+                    </div>
+                </Col>
+            </Row>
         );
     }
 }
