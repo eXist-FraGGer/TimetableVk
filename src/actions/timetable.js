@@ -49,3 +49,21 @@ export const deleteTimeItem = data => {
 export const addTimeItem = data => {
     return { type: types.ADD_TIME_ITEM, payload: data };
 };
+
+/**
+ * Setting arguments
+ *
+ * @param data
+ * @returns {{type: string, payload: *}}
+ */
+export const setSettings = data => {
+    return { type: types.SET_SETTINGS, payload: data };
+};
+
+export const addDefaultGroup = data => {
+    return { type: types.ADD_DEFAULT_GROUP, payload: data };
+};
+
+export const deleteDefaultGroup = data => {
+    return { type: types.DELETE_DEFAULT_GROUP, payload: data };
+};

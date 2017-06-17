@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FileSaver from 'file-saver';
-import { Modal, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Modal, Form, Table, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import FileReaderInput from 'react-file-reader-input';
 import moment from 'moment';
 import _ from 'lodash';
 
 import { Timetable } from '../containers';
 import { isJson } from '../helpFunction/validation';
-import { setStateTimeTable } from '../actions/timetable';
+import { setStateTimeTable, setSettings, addDefaultGroup, deleteDefaultGroup } from '../actions/timetable';
 import { setStateLessons } from '../actions/lessons';
 
 import '../style/Home.css'
@@ -18,14 +18,32 @@ import '../style/Home.css'
 export class Home extends Component {
     constructor(props) {
         super(props);
+
+        const { classNumbers, teachers, lessons, groups, lessonTypes } = this.props.state.timetable;
+
         this.state = {
             showGetStateModal: false,
-            teachersLoad: {}
+            showSettingsStateModal: false,
+            teachersLoad: {},
+            classNumbers: classNumbers.join(';'),
+            teachers: teachers.join(';'),
+            lessons: lessons.join(';'),
+            groups: groups.join(';'),
+            lessonTypes: lessonTypes.join(';'),
+            showAddDefaultGroupModal: false
         }
     }
 
     handleShowGetStateModal = () => {
         this.setState({ showGetStateModal: !this.state.showGetStateModal });
+    };
+
+    handleShowSettingsStateModal = () => {
+        this.setState({ showSettingsStateModal: !this.state.showSettingsStateModal });
+    };
+
+    handleShowAddDefaultGroupModal = () => {
+        this.setState({ showAddDefaultGroupModal: !this.state.showAddDefaultGroupModal });
     };
 
     componentDidMount() {
@@ -34,11 +52,19 @@ export class Home extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.calculateTeachersLoad(nextProps);
+
+        const { classNumbers, teachers, lessons, groups, lessonTypes } = nextProps.state.timetable;
+
+        this.setState({
+            classNumbers: classNumbers.join(';'),
+            teachers: teachers.join(';'),
+            lessons: lessons.join(';'),
+            groups: groups.join(';'),
+            lessonTypes: lessonTypes.join(';')
+        });
     };
 
     onClickSaveState = () => {
-        console.log(this.inputFileName.value);
-
         const blob = new Blob([JSON.stringify(this.props.state, null, 4)], { type: 'application/json;charset=utf-8' });
         FileSaver.saveAs(blob, `${this.inputFileName.value || 'Рассписание'}.json`);
         this.setState({ showGetStateModal: false });
@@ -109,6 +135,41 @@ export class Home extends Component {
         });
     };
 
+    onClickSettingsState = () => {
+        this.props.setSettings({
+            classNumbers: this.inputClassNumbers.value.split(';'),
+            teachers: this.inputTeachers.value.split(';'),
+            lessons: this.inputLessons.value.split(';'),
+            groups: this.inputGroups.value.split(';'),
+            lessonTypes: this.inputLessonTypes.value.split(';')
+        });
+        this.setState({ showSettingsStateModal: false });
+    };
+
+    onChangeDefaultGroupPosition = index => {
+        this.setState({ showAddDefaultGroupModal: true }, () => {
+            this.inputNewDefaultGroup.value = this.props.state.timetable.defaultGroupPosition[index].indexGroup;
+            this.inputNewDefaultGroupDay.value = this.props.state.timetable.defaultGroupPosition[index].indexDay;
+            this.inputNewDefaultGroupTimeItem.value = this.props.state.timetable.defaultGroupPosition[index].indexTimeItem;
+            this.inputNewDefaultGroupItem.value = this.props.state.timetable.defaultGroupPosition[index].indexItem;
+        });
+    };
+
+    onClickAddDefaultGroup = () => {
+        this.props.addDefaultGroup({
+            indexGroup: +this.inputNewDefaultGroup.value,
+            indexDay: +this.inputNewDefaultGroupDay.value,
+            indexTimeItem: +this.inputNewDefaultGroupTimeItem.value,
+            indexItem: +this.inputNewDefaultGroupItem.value
+        });
+        this.setState({ showAddDefaultGroupModal: false });
+    };
+
+    onClickDeleteDefaultGroup = index => {
+        this.props.deleteDefaultGroup(index);
+        this.setState({ showAddDefaultGroupModal: false });
+    };
+
     render() {
         const lessonsByWeek = _.groupBy(this.props.lessons, 'indexWeek');
 
@@ -144,6 +205,158 @@ export class Home extends Component {
                         {' '}
                         <Button bsStyle='success' onClick={this.onClickSaveState}>Сохранить</Button>
                         <Button bsStyle='success' onClick={this.onClickExportState}>Экспортировать в DOCX</Button>
+                    </Modal.Body>
+                </Modal>
+                <Modal
+                    style={{ textAlign: 'center', fontWeight: 700, borderRadius: 20, backgroundColor: 'transparent' }}
+                    show={this.state.showSettingsStateModal}
+                    onHide={this.handleShowSettingsStateModal}
+                    dialogClassName='modal-get-state'>
+                    <Modal.Header closeButton>
+                        <Modal.Title id='contained-modal-title-lg' >
+                            Задать аргументы
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <FormGroup controlId="formControlsClassNumbersText">
+                                <ControlLabel>Аудитории</ControlLabel>
+                                {' '}
+                                <FormControl type="text" placeholder="Аудитории"
+                                             inputRef={input => this.inputClassNumbers = input}
+                                             defaultValue={this.state.classNumbers} bsSize="small" />
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsTeachersText">
+                                <ControlLabel>Преподаватели</ControlLabel>
+                                {' '}
+                                <FormControl type="text" placeholder="Преподаватели"
+                                             inputRef={input => this.inputTeachers = input}
+                                             defaultValue={this.state.teachers} bsSize="small" />
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsLessonsText">
+                                <ControlLabel>Занятия</ControlLabel>
+                                {' '}
+                                <FormControl type="text" placeholder="Занятия"
+                                             inputRef={input => this.inputLessons = input}
+                                             defaultValue={this.state.lessons} bsSize="small" />
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsClassGroupsText">
+                                <ControlLabel>Группы</ControlLabel>
+                                {' '}
+                                <FormControl type="text" placeholder="Группы"
+                                             inputRef={input => this.inputGroups = input}
+                                             defaultValue={this.state.groups} bsSize="small" />
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsLessonTypesGroupsText">
+                                <ControlLabel>Типы занятий</ControlLabel>
+                                {' '}
+                                <FormControl type="text" placeholder="Типы занятий"
+                                             inputRef={input => this.inputLessonTypes = input}
+                                             defaultValue={this.state.lessonTypes} bsSize="small" />
+                            </FormGroup>
+                            {' '}
+                            <h6>Группы по умолчанию</h6>
+                            <Table striped bordered condensed hover>
+                                <thead>
+                                <tr><th>Группа</th><th>№ пары</th><th>№ дня</th><th>№ п/п</th><th></th></tr>
+                                </thead>
+                                <tbody>
+                                {_.map(this.props.state.timetable.defaultGroupPosition, (position, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{this.props.state.timetable.groups[position.indexGroup]}</td>
+                                            <td>{position.indexTimeItem}</td>
+                                            <td>{position.indexDay}</td>
+                                            <td>{position.indexItem}</td>
+                                            <td>
+                                                <Button bsStyle='danger' bsSize='small'
+                                                        onClick={this.onClickDeleteDefaultGroup.bind(this, index)}>
+                                                    -</Button>
+                                                <Button bsStyle='primary' bsSize='small'
+                                                        onClick={this.onChangeDefaultGroupPosition.bind(this, index).bind(this, index)}>
+                                                    *</Button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                                <tr>
+                                    <Button bsStyle='success' onClick={this.handleShowAddDefaultGroupModal}>+</Button>
+                                </tr>
+                                </tbody>
+                            </Table>
+                            {' '} <br/> {' '}
+                            <Button bsStyle='primary' onClick={this.onClickSettingsState}>Сохранить</Button>
+                            <Button bsStyle='success' onClick={this.handleShowSettingsStateModal}>Отмена</Button>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
+
+                <Modal
+                    style={{ textAlign: 'center', borderRadius: 20, backgroundColor: 'transparent' }}
+                    show={this.state.showAddDefaultGroupModal}
+                    onHide={this.handleShowAddDefaultGroupModal}
+                    dialogClassName='modal-add-lesson'>
+                    <Modal.Header closeButton>
+                        <Modal.Title id='contained-modal-title-lg' >
+                            Добавить занятие
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form horizontal>
+                            <FormGroup controlId="formControlsSelectGroup" bsClass="col-xs-3">
+                                <ControlLabel>Группа</ControlLabel>
+                                {' '}
+                                <FormControl componentClass="select" placeholder="Выберите группу" defaultValue={0}
+                                             inputRef={input => this.inputNewDefaultGroup = input}>
+                                    {_.map(this.props.state.timetable.groups, (group, index) => {
+                                        return (<option key={index} value={index}>{group}</option>);
+                                    })}
+                                </FormControl>
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsSelectDay" bsClass="col-xs-3">
+                                <ControlLabel>День</ControlLabel>
+                                {' '}
+                                <FormControl componentClass="select" placeholder="Выберите день" defaultValue={0}
+                                             inputRef={input => this.inputNewDefaultGroupDay = input}>
+                                    {_.map(new Array(5), (v, index) => {
+                                        return (<option key={index} value={index}>{index}</option>);
+                                    })}
+                                </FormControl>
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsSelectDay" bsClass="col-xs-3">
+                                <ControlLabel>Пара</ControlLabel>
+                                {' '}
+                                <FormControl componentClass="select" placeholder="Выберите пару" defaultValue={0}
+                                             inputRef={input => this.inputNewDefaultGroupTimeItem = input}>
+                                    {_.map(new Array(Object.keys(this.props.state.timetable.times).length), (v, index) => {
+                                        return (<option key={index} value={index}>{index}</option>);
+                                    })}
+                                </FormControl>
+                            </FormGroup>
+                            {' '}
+                            <FormGroup controlId="formControlsSelectDay" bsClass="col-xs-3">
+                                <ControlLabel>Номер по порядку</ControlLabel>
+                                {' '}
+                                <FormControl componentClass="select" placeholder="Выберите номер" defaultValue={0}
+                                             inputRef={input => this.inputNewDefaultGroupItem = input}>
+                                    {_.map(new Array(4), (v, index) => {
+                                        return (<option key={index} value={index}>{index}</option>);
+                                    })}
+                                </FormControl>
+                            </FormGroup>
+                            {' '}
+                        </Form>
+                        {' '}
+                        <Row>
+                            <Button bsStyle='success' onClick={this.onClickAddDefaultGroup}>Добавить</Button>
+                            <Button bsStyle='danger' type="submit" onClick={this.handleShowAddDefaultGroupModal}>Отмена</Button>
+                        </Row>
                     </Modal.Body>
                 </Modal>
 
@@ -192,12 +405,14 @@ export class Home extends Component {
                                 )
                             })
                         }</div>
+                        {' '} <br/> {' '}
+                        <Button bsStyle='info' onClick={this.handleShowSettingsStateModal}>Настройки</Button>
                     </div>
                 </Col>
             </Row>
         );
     }
-}
+};
 
 const mapStateToProps = (state) => {
     return {
@@ -212,8 +427,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setStateTimeTable: bindActionCreators(setStateTimeTable, dispatch),
-        setStateLessons: bindActionCreators(setStateLessons, dispatch)
+        setStateLessons: bindActionCreators(setStateLessons, dispatch),
+        setSettings: bindActionCreators(setSettings, dispatch),
+        addDefaultGroup: bindActionCreators(addDefaultGroup, dispatch),
+        deleteDefaultGroup: bindActionCreators(deleteDefaultGroup, dispatch)
     }
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )(Home)
+export default connect( mapStateToProps, mapDispatchToProps )(Home);

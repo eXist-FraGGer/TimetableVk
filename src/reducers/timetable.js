@@ -304,6 +304,34 @@ export default function (state = initial_state, action) {
             }
         }
 
+        case types.SET_SETTINGS: {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
+
+        case types.ADD_DEFAULT_GROUP: {
+            return {
+                ...state,
+                defaultGroupPosition: [
+                    ...state.defaultGroupPosition,
+                    {
+                        ...action.payload
+                    }
+                ]
+            }
+        }
+
+        case types.DELETE_DEFAULT_GROUP: {
+            return {
+                ...state,
+                defaultGroupPosition: [
+                    ..._.without(state.defaultGroupPosition, state.defaultGroupPosition[action.payload])
+                ]
+            }
+        }
+
         default: return state
     }
 }
